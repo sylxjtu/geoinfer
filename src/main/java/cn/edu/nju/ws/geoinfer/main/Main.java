@@ -1,0 +1,133 @@
+package cn.edu.nju.ws.geoinfer.main;
+
+import cn.edu.nju.ws.geoinfer.builtin.BuiltinRegistry;
+import cn.edu.nju.ws.geoinfer.data.program.Program;
+import cn.edu.nju.ws.geoinfer.db.SqlDatabaseManager;
+import cn.edu.nju.ws.geoinfer.db.SqlDatabaseTable;
+import cn.edu.nju.ws.geoinfer.engine.BasicInferEngine;
+import cn.edu.nju.ws.geoinfer.engine.InferEngine;
+import cn.edu.nju.ws.geoinfer.parser.Parser;
+import cn.edu.nju.ws.geoinfer.parser.Visitor;
+import cn.edu.nju.ws.geoinfer.solver.SemiNaiveSolver;
+import cn.edu.nju.ws.geoinfer.sql.SqlStorageEngine;
+import cn.edu.nju.ws.geoinfer.transformer.SipTransformer;
+import cn.edu.nju.ws.geoinfer.transformer.SupMagicTransformer;
+import cn.edu.nju.ws.geoinfer.transformer.Transformer;
+import cn.edu.nju.ws.geoinfer.transformer.TransformerCombinator;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Main {
+  public static void main(String[] args) {
+    Long t1 = System.nanoTime();
+
+    try {
+      SqlStorageEngine.getInstance().initialize("jdbc:mysql://localhost:3306/geoinfer", "root", "");
+    } catch (SQLException cause) {
+      throw new IllegalStateException("Failed to connect db", cause);
+    }
+
+    String ruleStr;
+    try {
+      ruleStr = FileUtils.readFileToString(new File("rules/rule_1.txt"), StandardCharsets.UTF_8);
+    } catch (IOException cause) {
+      throw new IllegalStateException("Failed to get rules", cause);
+    }
+
+    BuiltinRegistry.getInstance()
+        .register(
+            "concat",
+            inputData ->
+                inputData.stream()
+                    .map(row -> Arrays.asList(row.get(0), row.get(1), row.get(0) + row.get(1)))
+                    .collect(Collectors.toList()),
+            3);
+
+    BuiltinRegistry.getInstance()
+        .register(
+            "minus",
+            inputData ->
+                inputData.stream()
+                    .map(
+                        row ->
+                            Arrays.asList(
+                                row.get(0),
+                                row.get(1),
+                                String.valueOf(
+                                    Float.valueOf(row.get(0)) - Float.valueOf(row.get(1)))))
+                    .collect(Collectors.toList()),
+            3);
+
+    BuiltinRegistry.getInstance()
+        .register(
+            "addmod",
+            inputData ->
+                inputData.stream()
+                    .map(
+                        row ->
+                            Arrays.asList(
+                                row.get(0),
+                                row.get(1),
+                                row.get(2),
+                                String.valueOf(
+                                    (Float.valueOf(row.get(0)) + Float.valueOf(row.get(1)) + Float.valueOf(row.get(2))) % Float.valueOf(row.get(2))
+                                )))
+                    .collect(Collectors.toList()),
+            4);
+
+    BuiltinRegistry.getInstance()
+        .register(
+            "cal_time_delta",
+            inputData ->
+                inputData.stream()
+                    .map(
+                        row ->
+                            Arrays.asList(
+                                row.get(0), String.valueOf(Float.valueOf(row.get(0)) / 360 * 24)))
+                    .collect(Collectors.toList()),
+            2);
+
+    BuiltinRegistry.getInstance()
+        .register(
+            "greater_than",
+            inputData ->
+                inputData.stream()
+                    .filter(row -> Float.valueOf(row.get(0)) > Float.valueOf(row.get(1)))
+                    .collect(Collectors.toList()),
+            2);
+
+    Program program = (Program) new Visitor().visit(Parser.parse(ruleStr).logicRules());
+
+    Transformer transformer =
+        TransformerCombinator.combineTransformer(new SipTransformer(), new SupMagicTransformer());
+    Program transformed = transformer.transform(program);
+    System.out.println("{P}: " + program);
+    System.out.println("{T}: " + transformed);
+    transformer =
+        TransformerCombinator.combineTransformer(new SipTransformer(), new SupMagicTransformer());
+    InferEngine engine = new BasicInferEngine(transformer, new SemiNaiveSolver());
+    engine.initialize(program);
+    SqlDatabaseManager dbm = new SqlDatabaseManager();
+    dbm.initializeTablePointer();
+    // dbm.createTable("geonames", 19, false);
+    SqlDatabaseTable table = engine.solve(dbm);
+    List<List<String>> data = dbm.getData(table);
+    for (List<String> row : data) {
+      for (String cell : row) {
+        System.out.print(cell + ", ");
+      }
+      System.out.println();
+    }
+    System.out.println(table);
+
+    Long t2 = System.nanoTime();
+    System.out.println("Elapsed " + (t2 - t1) / 1000000 + "ms");
+  }
+}
