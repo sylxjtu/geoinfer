@@ -15,6 +15,8 @@ import cn.edu.nju.ws.geoinfer.transformer.SupMagicTransformer;
 import cn.edu.nju.ws.geoinfer.transformer.Transformer;
 import cn.edu.nju.ws.geoinfer.transformer.TransformerCombinator;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,11 +27,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Main {
+  private static final Logger LOG = LoggerFactory.getLogger(Main.class);
+
   public static void main(String[] args) {
     Long t1 = System.nanoTime();
 
     try {
       SqlStorageEngine.getInstance().initialize("jdbc:mysql://localhost:3306/geoinfer", "root", "");
+      // SqlStorageEngine.getInstance().initialize("jdbc:sqlite:geoinfer.db", "", "");
     } catch (SQLException cause) {
       throw new IllegalStateException("Failed to connect db", cause);
     }
@@ -108,8 +113,9 @@ public class Main {
     Transformer transformer =
         TransformerCombinator.combineTransformer(new SipTransformer(), new SupMagicTransformer());
     Program transformed = transformer.transform(program);
-    System.out.println("{P}: " + program);
-    System.out.println("{T}: " + transformed);
+
+    LOG.debug("Original program:\n{}", program);
+    LOG.debug("Transformed program:\n{}", transformed);
     transformer =
         TransformerCombinator.combineTransformer(new SipTransformer(), new SupMagicTransformer());
     InferEngine engine = new BasicInferEngine(transformer, new SemiNaiveSolver());
@@ -119,15 +125,16 @@ public class Main {
     // dbm.createTable("geonames", 19, false);
     SqlDatabaseTable table = engine.solve(dbm);
     List<List<String>> data = dbm.getData(table);
+    StringBuilder dataStr = new StringBuilder();
     for (List<String> row : data) {
       for (String cell : row) {
-        System.out.print(cell + ", ");
+        dataStr.append(cell).append(", ");
       }
-      System.out.println();
+      dataStr.append("\n");
     }
-    System.out.println(table);
+    LOG.info("Result:\n{}", dataStr);
 
     Long t2 = System.nanoTime();
-    System.out.println("Elapsed " + (t2 - t1) / 1000000 + "ms");
+    LOG.info("Elapsed {} ms", (t2 - t1) / 1000000);
   }
 }

@@ -8,17 +8,18 @@ import cn.edu.nju.ws.geoinfer.data.rarule.*;
 import cn.edu.nju.ws.geoinfer.db.DatabaseManager;
 import cn.edu.nju.ws.geoinfer.db.DatabaseTable;
 import cn.edu.nju.ws.geoinfer.utils.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RuleApplierManager<T extends DatabaseTable> {
   private static final String NON_VARIABLE_FIELD = "*";
+  private static final Logger LOG = LoggerFactory.getLogger(RuleApplierManager.class);
 
   void applyRule(Rule rule, DatabaseManager<T> dbm) {
-    System.out.print((char) 27 + "[35m");
-    System.out.println("Applying " + rule);
-    System.out.print((char) 27 + "[0m");
+    LOG.debug("Applying {}", rule);
 
     T currentTable = null;
     List<String> currentVarFields = new ArrayList<>();
@@ -86,7 +87,7 @@ public class RuleApplierManager<T extends DatabaseTable> {
     TablePointerPair newPointerPair =
         new TablePointerPair(pointerPair.getCurrentPointer(), tailPointer);
     dbm.setTablePointer(table, newPointerPair);
-    System.out.println(predicate.getTableName() + pointerPair.getCurrentPointer() + " : " + tailPointer);
+    LOG.debug("Table {} current pointer {} update to {}", predicate.getTableName(), pointerPair.getCurrentPointer(), tailPointer);
     return pointerPair.getCurrentPointer() != tailPointer;
   }
 

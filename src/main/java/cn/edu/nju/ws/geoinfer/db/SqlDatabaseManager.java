@@ -4,6 +4,8 @@ import cn.edu.nju.ws.geoinfer.data.miscellaneous.TablePointerPair;
 import cn.edu.nju.ws.geoinfer.data.rarule.*;
 import cn.edu.nju.ws.geoinfer.sql.SqlStorageEngine;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,6 +15,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
+  private static final Logger LOG = LoggerFactory.getLogger(SqlDatabaseManager.class);
+
   /**
    * Create sql table
    *
@@ -86,7 +90,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   public SqlDatabaseTable insertIntoTable(SqlDatabaseTable table, List<String> row) {
     StringBuilder sql = new StringBuilder();
     sql.append("INSERT IGNORE INTO");
-    sql.append(" `").append(table.getName()).append("`");
+    sql.append(" ").append(table.getRef());
     sql.append(" (`id`");
     for (int i = 0; i < row.size(); i++) {
       sql.append(", `_").append(i).append("`");
@@ -127,7 +131,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     StringBuilder sql = new StringBuilder();
     sql.append("CREATE VIEW");
     sql.append(" `").append(tableName).append("`");
-    sql.append(" AS SELECT * FROM `").append(table.getName()).append("`");
+    sql.append(" AS SELECT * FROM ").append(table.getRef());
     sql.append(" WHERE");
     for (int i = 0; i < filterRules.size(); i++) {
       FilterRule filterRule = filterRules.get(i);
@@ -161,7 +165,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     StringBuilder sql = new StringBuilder();
     sql.append("CREATE VIEW");
     sql.append(" `").append(tableName).append("`");
-    sql.append(" AS SELECT * FROM `").append(table.getName()).append("`");
+    sql.append(" AS SELECT * FROM ").append(table.getRef());
     sql.append(" WHERE");
     for (FilterRule rule : filterRules) {
       if (rule instanceof ColumnFilterRule) {
@@ -203,7 +207,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     if (selectionRules.isEmpty()) {
       sql.append("CREATE VIEW");
       sql.append(" `").append(tableName).append("`");
-      sql.append(" AS SELECT `id` FROM `").append(table.getName()).append("`");
+      sql.append(" AS SELECT `id` FROM ").append(table.getRef());
     } else {
       sql.append("CREATE VIEW");
       sql.append(" `").append(tableName).append("`");
@@ -220,7 +224,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
         }
         sql.append(" AS `_").append(i).append("`");
       }
-      sql.append(" FROM `").append(table.getName()).append("`;");
+      sql.append(" FROM ").append(table.getRef()).append(";");
     }
     executeSql(sql.toString());
     return new SqlDatabaseTable(tableName);
@@ -228,13 +232,13 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
 
   @Override
   public List<List<String>> getData(SqlDatabaseTable table) {
-    System.out.println("Get data from table " + table.getName());
+    LOG.debug("Get data from table {}", table.getName());
     List<List<String>> ret = new ArrayList<>();
 
     Connection connection = SqlStorageEngine.getInstance().getConnection();
 
     try (ResultSet resultSet =
-             connection.createStatement().executeQuery("SELECT * FROM `" + table.getName() + "`;")) {
+             connection.createStatement().executeQuery("SELECT * FROM " + table.getRef() + ";")) {
       int dataColumnCount = getTableColumnCount(table);
       while (resultSet.next()) {
         List<String> row = new ArrayList<>();
@@ -247,7 +251,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
       throw new IllegalStateException("", cause);
     }
 
-    System.out.println("Got " + ret.size() + " rows");
+    LOG.debug("Got {} rows", ret.size());
     return ret;
   }
 
@@ -268,7 +272,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
 
     StringBuilder sql = new StringBuilder();
     sql.append("INSERT IGNORE INTO");
-    sql.append(" `").append(unionTo.getName()).append("`");
+    sql.append(" ").append(unionTo.getRef());
     sql.append(" (`id`");
     for (int i = 0; i < columnCount; i++) {
       sql.append(", `_").append(i).append("`");
@@ -278,7 +282,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     for (int i = 0; i < columnCount; i++) {
       sql.append(", `_").append(i).append("`");
     }
-    sql.append(" FROM `").append(unionFrom.getName()).append("`;");
+    sql.append(" FROM ").append(unionFrom.getRef()).append(";");
     executeSql(sql.toString());
     return unionTo;
   }
@@ -305,11 +309,11 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
           .append(leftColumnCount + i)
           .append("`");
     }
-    sql.append(" FROM `")
-        .append(leftTable.getName())
-        .append("` AS `left`, `")
-        .append(rightTable.getName())
-        .append("` AS `right`");
+    sql.append(" FROM ")
+        .append(leftTable.getRef())
+        .append(" AS `left`, ")
+        .append(rightTable.getRef())
+        .append(" AS `right`");
     if (!joinRules.isEmpty()) {
       sql.append(" WHERE");
       for (int i = 0; i < joinRules.size(); i++) {
@@ -355,7 +359,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   public int getTableTailPointer(SqlDatabaseTable table) {
     Connection connection = SqlStorageEngine.getInstance().getConnection();
     String sql = "SELECT MAX(id) AS tail FROM `" + table.getName() + "`";
-    System.out.println(sql);
+    LOG.debug(sql);
 
     try (ResultSet resultSet = connection.createStatement().executeQuery(sql)) {
       if (!resultSet.next()) return 0;
@@ -393,7 +397,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     Connection connection = SqlStorageEngine.getInstance().getConnection();
 
     try (ResultSet resultSet =
-             connection.createStatement().executeQuery("SELECT * FROM `" + table.getName() + "`")) {
+             connection.createStatement().executeQuery("SELECT * FROM `" + table.getName() + "` LIMIT 0")) {
       int allColumnCount = resultSet.getMetaData().getColumnCount();
       return NumberUtils.toInt(
           resultSet

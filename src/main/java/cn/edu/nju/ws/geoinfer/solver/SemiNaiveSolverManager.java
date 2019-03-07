@@ -8,10 +8,14 @@ import cn.edu.nju.ws.geoinfer.db.DatabaseManager;
 import cn.edu.nju.ws.geoinfer.db.DatabaseTable;
 import cn.edu.nju.ws.geoinfer.ruleapply.RuleApplier;
 import cn.edu.nju.ws.geoinfer.utils.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 class SemiNaiveSolverManager<T extends DatabaseTable> {
+  private static final Logger LOG = LoggerFactory.getLogger(SemiNaiveSolverManager.class);
+
   private DatabaseManager<T> dbm;
   private List<Predicate> predicates;
   private Map<Predicate, Integer> predicateToInt;
@@ -30,7 +34,7 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
    * Implements semi naive solving strategy
    *
    * @param program the input program
-   * @param dbm     the db manager
+   * @param dbm the db manager
    * @return the table of goal
    */
   T solve(Program program, DatabaseManager<T> dbm) {
@@ -42,8 +46,11 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
     predicateIsRecursiveMap = buildPredicateRecursiveMap();
     buildPredicateRules(program, sccResult.getBelong());
 
+    Long ts = System.nanoTime();
     for (List<Integer> scc : sccList) {
       generalSemiNaiveScc(scc);
+      Long te = System.nanoTime();
+      LOG.info("Elapsed {} ms", (te - ts) / 1000000);
     }
 
     return this.dbm.getTable(program.getGoal().getPredicate().getTableName());
@@ -140,7 +147,7 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
   /**
    * Build a list of rules according to scc
    *
-   * @param program   input program
+   * @param program input program
    * @param sccBelong the belonging of scc predicate
    */
   private void buildPredicateRules(Program program, int[] sccBelong) {
@@ -199,9 +206,9 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
    * @param recursiveRules the rules to be applied
    */
   private void semiNaiveSolve(List<Rule> recursiveRules) {
-    System.out.println("Entering clique");
+    LOG.debug("Entering clique");
     for (Rule rule : recursiveRules) {
-      System.out.println("Clique has rule " + rule);
+      LOG.debug("Clique has rule {}", rule);
       Predicate headPredicate = rule.getHead().getPredicate();
       int arity = rule.getHead().getTerms().size();
       dbm.createTable(headPredicate.getTableName(), arity, true);
@@ -222,7 +229,7 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
         isContinue = RuleApplier.updatePointer(rule.getHead().getPredicate(), dbm) || isContinue;
       }
       if (!isContinue) {
-        System.out.println("Exiting clique");
+        LOG.debug("Exiting clique");
         break;
       }
     }
