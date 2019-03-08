@@ -53,27 +53,6 @@ public class SipTransformer implements Transformer {
   }
 
   /**
-   * Get all predicates from rule set
-   *
-   * @param rules input rules
-   * @param goal  input goal
-   * @return a set of all predicates
-   * @deprecated
-   */
-  @Deprecated
-  private Set<Predicate> getAllPredicates(List<Rule> rules, Atom goal) {
-    Set<Predicate> predicateSet = new HashSet<>();
-    for (Rule rule : rules) {
-      predicateSet.add(rule.getHead().getPredicate());
-      for (Atom atom : rule.getBody()) {
-        predicateSet.add(atom.getPredicate());
-      }
-    }
-    predicateSet.add(goal.getPredicate());
-    return predicateSet;
-  }
-
-  /**
    * Get rules for predicate
    *
    * @param rules input rules

@@ -1,7 +1,7 @@
 package cn.edu.nju.ws.geoinfer.db;
 
 public abstract class SqlDatabaseTable implements DatabaseTable {
-  abstract public String getRef();
+  public abstract String getRef();
 
-  abstract public String getFullRef();
+  public abstract String getFullRef();
 }

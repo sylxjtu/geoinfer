@@ -1,5 +1,6 @@
 package cn.edu.nju.ws.geoinfer.sql;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,11 +28,17 @@ public class SqlStorageEngine {
 
   public void executeSql(String sql) {
     LOG.debug(sql);
+    Long ts = System.nanoTime();
 
     try (Statement statement = connection.createStatement()) {
       statement.execute(sql);
     } catch (SQLException cause) {
       throw new IllegalStateException("", cause);
+    }
+    Long te = System.nanoTime();
+    Long ms = (te - ts) / 1000000;
+    if (ms >= 100) {
+      LOG.info("SQL {}, elapsed {} ms", StringUtils.substring(sql, 0, 50), (te - ts) / 1000000);
     }
   }
 
@@ -57,9 +64,19 @@ public class SqlStorageEngine {
                   try {
                     connection.commit();
                   } catch (SQLException e) {
-                    e.printStackTrace();
+                    throw new IllegalStateException("", e);
                   }
                 }));
+  }
+
+  public void bootstrap() {
+    executeSql(
+        "CREATE TABLE IF NOT EXISTS `_table_pointer` (\n"
+            + "  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,\n"
+            + "  `table_name` varchar(255) NOT NULL,\n"
+            + "  `last` int(11) NOT NULL,\n"
+            + "  `current` int(11) NOT NULL\n"
+            + ") ENGINE=InnoDB DEFAULT CHARSET=utf8;\n");
   }
 
   public void addCleanTable(String tempTableName) {

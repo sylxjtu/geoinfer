@@ -129,3 +129,13 @@ j
 :src/main/java/cn/edu/nju/ws/geoinfer/sql/package-info.java,e\d\ed77ae3eedeeaeaf8d788fcf175948afa7028c2b
 g
 7src/main/java/cn/edu/nju/ws/geoinfer/utils/Unifier.java,d\e\de906572f08f2af9a84286dc59b64b8cbc68f1e3
+r
+Bsrc/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseQueryTable.java,9\b\9b8fd3a36f3fef071a408a1bab6dbda7ff062848
+p
+@src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseRefTable.java,9\7\973a882f68719a583cf4d8f8feb6eaa0c2c2be18
+g
+7src/test/java/cn/edu/nju/ws/geoinfer/TestLongInfer.java,c\7\c7c3e7b51a6ec66c831c93e9ec09d917a0f859b6
+s
+Csrc/main/java/cn/edu/nju/ws/geoinfer/transformer/IdTransformer.java,1\0\102ed0a6f87a42f01c2e2f4a47aacfe17619c160
+m
+=src/main/java/cn/edu/nju/ws/geoinfer/utils/simpleInferer.java,3\9\39a1707cdbb0f2349a7d5730749341dcbae02ba3

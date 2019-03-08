@@ -43,7 +43,7 @@ public class SupMagicTransformer implements Transformer {
       int currentTransformAtomIndex = 0;
       for (int atomIndex = rule.getBody().size() - 1; atomIndex >= 0; atomIndex--) {
         Atom atom = rule.getBody().get(atomIndex);
-        if (atom.getPredicate() instanceof AdornPredicate) {
+        if (needBound(atom)) {
           currentTransformAtomIndex = atomIndex;
           break;
         }
@@ -133,7 +133,7 @@ public class SupMagicTransformer implements Transformer {
       Rule rule = inputRules.get(ruleIndex);
       for (int atomIndex = 0; atomIndex < rule.getBody().size(); atomIndex++) {
         Atom atom = rule.getBody().get(atomIndex);
-        if (!(atom.getPredicate() instanceof AdornPredicate)) {
+        if (!needBound(atom)) {
           continue;
         }
         List<Atom> magicBody =
@@ -153,7 +153,9 @@ public class SupMagicTransformer implements Transformer {
       List<Atom> newRuleBody = new ArrayList<>();
       Rule newRule = new Rule(rule.getHead(), newRuleBody);
       int atomIndex = supMagicAtoms.get(ruleIndex).size() - 1;
-      newRule.getBody().add(supMagicAtoms.get(ruleIndex).get(atomIndex));
+      if (needBound(rule.getHead())) {
+        newRule.getBody().add(supMagicAtoms.get(ruleIndex).get(atomIndex));
+      }
       for (int cloneAtomIndex = atomIndex;
            cloneAtomIndex < rule.getBody().size();
            cloneAtomIndex++) {
@@ -171,5 +173,17 @@ public class SupMagicTransformer implements Transformer {
    */
   private void addSeed(Atom goal) {
     outputRules.add(new Rule(adornedAtomToMagic(goal), new ArrayList<>()));
+  }
+
+  /**
+   * Checks if a atom need variable bound
+   *
+   * @param atom the atom to be checked
+   * @return if atom need variable bound
+   */
+  private boolean needBound(Atom atom) {
+    Predicate predicate = atom.getPredicate();
+    if (!(predicate instanceof AdornPredicate)) return false;
+    return ((AdornPredicate) predicate).getAdorn().chars().anyMatch(x -> x == 'b');
   }
 }

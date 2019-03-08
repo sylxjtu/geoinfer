@@ -32,6 +32,6 @@ public class RawPredicate extends Predicate {
 
   @Override
   public String getFullName() {
-    return name;
+    return getName();
   }
 }

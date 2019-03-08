@@ -1,6 +1,5 @@
 
-fsquid:S1192ˆ"GDefine a constant instead of duplicating this literal " WHERE" 3 times.(‡ãíÏ8†¦öğ”-
-fsquid:S1192ä"HDefine a constant instead of duplicating this literal " FROM `" 3 times.(“˜èY8ÄØŸñ”-
-hsquid:UselessImportCheck"=Remove this unused import 'cn.edu.nju.ws.geoinfer.main.Main'.(û±„é8Ú¦º»•-
-psquid:S1192…"LDefine a constant instead of duplicating this literal "CREATE VIEW" 5 times.(È¯µúÿÿÿÿ8¾Àôï”-
-Vsquid:S1135ª"2Complete the task associated to this TODO comment.(ê°ÒÖùÿÿÿÿ8Ø¼˜•-
+msquid:S1192~"ODefine a constant instead of duplicating this literal "SELECT * FROM " 4 times.(¤ÑšÍ8šĞšÜ•-
+esquid:S1192"GDefine a constant instead of duplicating this literal " WHERE" 3 times.(‡ãíÏ8†¦öğ”-
+psquid:S1192Á"QDefine a constant instead of duplicating this literal "SELECT 0 AS `id`" 3 times.(Æ¬íÿ8˜–ûâ•-
+fsquid:S1192Ğ"GDefine a constant instead of duplicating this literal " FROM " 3 times.(ç†ûŒ8šĞšÜ•-

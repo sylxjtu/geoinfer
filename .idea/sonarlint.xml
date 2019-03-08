@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SonarLintProjectSettings">
+    <option name="fileExclusions">
+      <list>
+        <option value="FILE:build/generated-src/antlr/main/cn/edu/nju/ws/geoinfer/antlr/DatalogBaseListener.java" />
+        <option value="FILE:build/generated-src/antlr/main/cn/edu/nju/ws/geoinfer/antlr/DatalogLexer.java" />
+        <option value="FILE:build/generated-src/antlr/main/cn/edu/nju/ws/geoinfer/antlr/DatalogParser.java" />
+      </list>
+    </option>
+  </component>
+</project>

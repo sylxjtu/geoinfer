@@ -121,7 +121,6 @@ public class Main {
     engine.initialize(program);
     SqlDatabaseManager dbm = new SqlDatabaseManager();
     dbm.initializeTablePointer();
-    // dbm.createTable("geonames", 19, false);
     SqlDatabaseTable table = engine.solve(dbm);
     List<List<String>> data = dbm.getData(table);
     StringBuilder dataStr = new StringBuilder();

@@ -52,22 +52,14 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
       sql.append(" IF NOT EXISTS");
     }
     sql.append(" `").append(tableName).append("`");
-    sql.append(" ( `id` INT NOT NULL AUTO_INCREMENT, `uniq` TINYINT(1) NOT NULL DEFAULT 1,");
+    sql.append(" ( `id` INT NOT NULL AUTO_INCREMENT, `uniq` CHAR(32) NOT NULL UNIQUE,");
     for (int i = 0; i < columnCount; i++) {
       sql.append(" `_").append(i).append("` VARCHAR(32) NULL,");
     }
     sql.append(" PRIMARY KEY (`id`)) ENGINE = MEMORY;");
     executeSql(sql.toString());
-    sql.setLength(0);
 
-    sql.append("ALTER TABLE");
-    sql.append(" `").append(tableName).append("`");
-    sql.append(" ADD UNIQUE (`uniq`");
-    for (int i = 0; i < columnCount; i++) {
-      sql.append(", `_").append(i).append("`");
-    }
-    sql.append(");");
-    executeSql(sql.toString());
+    createIndexes(tableName, columnCount);
 
     return new SqlDatabaseRefTable(tableName);
   }
@@ -94,11 +86,11 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     StringBuilder sql = new StringBuilder();
     sql.append("INSERT IGNORE INTO");
     sql.append(" ").append(table.getFullRef());
-    sql.append(" (`id`");
+    sql.append(" (`id`, `uniq`");
     for (int i = 0; i < row.size(); i++) {
       sql.append(", `_").append(i).append("`");
     }
-    sql.append(") VALUES (NULL");
+    sql.append(") VALUES (NULL, ").append(getRowMd5Sql(row));
     for (String s : row) {
       sql.append(", '").append(s).append("'");
     }
@@ -198,9 +190,9 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   public SqlDatabaseTable select(SqlDatabaseTable table, List<SelectionRule> selectionRules) {
     StringBuilder sql = new StringBuilder();
     if (selectionRules.isEmpty()) {
-      sql.append("SELECT `id` FROM ").append(table.getFullRef());
+      sql.append("SELECT 0 AS `id`");
     } else {
-      sql.append("SELECT `id`");
+      sql.append("SELECT 0 AS `id`");
       for (int i = 0; i < selectionRules.size(); i++) {
         sql.append(", ");
         SelectionRule rule = selectionRules.get(i);
@@ -261,12 +253,12 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     StringBuilder sql = new StringBuilder();
     sql.append("INSERT IGNORE INTO");
     sql.append(" ").append(unionTo.getFullRef());
-    sql.append(" (`id`");
+    sql.append(" (`id`, `uniq`");
     for (int i = 0; i < columnCount; i++) {
       sql.append(", `_").append(i).append("`");
     }
     sql.append(")");
-    sql.append(" SELECT NULL");
+    sql.append(" SELECT NULL, ").append(getRowMd5Sql(columnCount));
     for (int i = 0; i < columnCount; i++) {
       sql.append(", `_").append(i).append("`");
     }
@@ -279,7 +271,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   public SqlDatabaseTable join(
       SqlDatabaseTable leftTable, SqlDatabaseTable rightTable, List<JoinRule> joinRules) {
     StringBuilder sql = new StringBuilder();
-    sql.append("SELECT '0' AS `id`");
+    sql.append("SELECT 0 AS `id`");
 
     int leftColumnCount = getTableColumnCount(leftTable);
     int rightColumnCount = getTableColumnCount(rightTable);
@@ -407,6 +399,32 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
 
   private void executeSql(String sql) {
     SqlStorageEngine.getInstance().executeSql(sql);
+  }
+
+  private void createIndexes(String tableName, int columnCount) {
+    for (int i = 0; i < columnCount; i++) {
+      executeSql("ALTER TABLE `" + tableName + "` ADD INDEX (`_" + i + "`);");
+    }
+  }
+
+  private String getRowMd5Sql(int size) {
+    StringBuilder query = new StringBuilder();
+    query.append("MD5(CONCAT(''");
+    for (int i = 0; i < size; i++) {
+      query.append(", `_").append(i).append("`");
+    }
+    query.append("))");
+    return query.toString();
+  }
+
+  private String getRowMd5Sql(List<String> row) {
+    StringBuilder query = new StringBuilder();
+    query.append("MD5(CONCAT(''");
+    for (String cell : row) {
+      query.append(", '").append(cell).append("'");
+    }
+    query.append("))");
+    return query.toString();
   }
 
   private String generateTempTableName() {
