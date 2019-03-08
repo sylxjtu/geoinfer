@@ -32,20 +32,23 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
    *
    * @param tableName
    * @param columnCount
-   * @param ignoreExist
+   * @param dropExist
    * @return
    */
   @Override
-  public SqlDatabaseTable createTable(String tableName, int columnCount, boolean ignoreExist) {
+  public SqlDatabaseTable createTable(String tableName, int columnCount, boolean dropExist) {
     StringBuilder sql = new StringBuilder();
-    if (!ignoreExist) {
+    if (dropExist) {
       sql.append("DROP TABLE IF EXISTS `").append(tableName).append("`;");
       executeSql(sql.toString());
       sql.setLength(0);
     }
 
+    if (!dropExist && SqlStorageEngine.getInstance().checkTableExist(tableName))
+      return new SqlDatabaseRefTable(tableName);
+
     sql.append("CREATE TABLE");
-    if (ignoreExist) {
+    if (!dropExist) {
       sql.append(" IF NOT EXISTS");
     }
     sql.append(" `").append(tableName).append("`");
@@ -66,12 +69,12 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     sql.append(");");
     executeSql(sql.toString());
 
-    return new SqlDatabaseTable(tableName);
+    return new SqlDatabaseRefTable(tableName);
   }
 
   @Override
   public SqlDatabaseTable getTable(String tableName) {
-    return new SqlDatabaseTable(tableName);
+    return new SqlDatabaseRefTable(tableName);
   }
 
   /**
@@ -90,7 +93,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   public SqlDatabaseTable insertIntoTable(SqlDatabaseTable table, List<String> row) {
     StringBuilder sql = new StringBuilder();
     sql.append("INSERT IGNORE INTO");
-    sql.append(" ").append(table.getRef());
+    sql.append(" ").append(table.getFullRef());
     sql.append(" (`id`");
     for (int i = 0; i < row.size(); i++) {
       sql.append(", `_").append(i).append("`");
@@ -127,11 +130,8 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   public SqlDatabaseTable filter(SqlDatabaseTable table, List<FilterRule> filterRules) {
     if (filterRules.isEmpty()) return table;
 
-    String tableName = generateTempTableName();
     StringBuilder sql = new StringBuilder();
-    sql.append("CREATE VIEW");
-    sql.append(" `").append(tableName).append("`");
-    sql.append(" AS SELECT * FROM ").append(table.getRef());
+    sql.append("SELECT * FROM ").append(table.getFullRef());
     sql.append(" WHERE");
     for (int i = 0; i < filterRules.size(); i++) {
       FilterRule filterRule = filterRules.get(i);
@@ -150,10 +150,8 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
         sql.append(" AND");
       }
     }
-    sql.append(";");
-    executeSql(sql.toString());
 
-    return new SqlDatabaseTable(tableName);
+    return new SqlDatabaseQueryTable(sql.toString());
   }
 
   @Override
@@ -161,11 +159,8 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
       SqlDatabaseTable table, List<FilterRule> filterRules, int start, int end) {
     if (filterRules.isEmpty()) return table;
 
-    String tableName = generateTempTableName();
     StringBuilder sql = new StringBuilder();
-    sql.append("CREATE VIEW");
-    sql.append(" `").append(tableName).append("`");
-    sql.append(" AS SELECT * FROM ").append(table.getRef());
+    sql.append("SELECT * FROM ").append(table.getFullRef());
     sql.append(" WHERE");
     for (FilterRule rule : filterRules) {
       if (rule instanceof ColumnFilterRule) {
@@ -182,10 +177,9 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
       sql.append(" AND");
     }
     sql.append(" `id` BETWEEN ").append(start).append(" AND ").append(end);
-    sql.append(";");
     executeSql(sql.toString());
 
-    return new SqlDatabaseTable(tableName);
+    return new SqlDatabaseQueryTable(sql.toString());
   }
 
   /**
@@ -202,16 +196,11 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
    */
   @Override
   public SqlDatabaseTable select(SqlDatabaseTable table, List<SelectionRule> selectionRules) {
-    String tableName = generateTempTableName();
     StringBuilder sql = new StringBuilder();
     if (selectionRules.isEmpty()) {
-      sql.append("CREATE VIEW");
-      sql.append(" `").append(tableName).append("`");
-      sql.append(" AS SELECT `id` FROM ").append(table.getRef());
+      sql.append("SELECT `id` FROM ").append(table.getFullRef());
     } else {
-      sql.append("CREATE VIEW");
-      sql.append(" `").append(tableName).append("`");
-      sql.append(" AS SELECT `id`");
+      sql.append("SELECT `id`");
       for (int i = 0; i < selectionRules.size(); i++) {
         sql.append(", ");
         SelectionRule rule = selectionRules.get(i);
@@ -224,21 +213,20 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
         }
         sql.append(" AS `_").append(i).append("`");
       }
-      sql.append(" FROM ").append(table.getRef()).append(";");
+      sql.append(" FROM ").append(table.getFullRef());
     }
-    executeSql(sql.toString());
-    return new SqlDatabaseTable(tableName);
+    return new SqlDatabaseQueryTable(sql.toString());
   }
 
   @Override
   public List<List<String>> getData(SqlDatabaseTable table) {
-    LOG.debug("Get data from table {}", table.getName());
+    LOG.debug("Get data from table {}", table.getFullRef());
     List<List<String>> ret = new ArrayList<>();
 
     Connection connection = SqlStorageEngine.getInstance().getConnection();
 
     try (ResultSet resultSet =
-             connection.createStatement().executeQuery("SELECT * FROM " + table.getRef() + ";")) {
+             connection.createStatement().executeQuery("SELECT * FROM " + table.getFullRef() + ";")) {
       int dataColumnCount = getTableColumnCount(table);
       while (resultSet.next()) {
         List<String> row = new ArrayList<>();
@@ -259,7 +247,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   public SqlDatabaseTable putData(List<List<String>> data, int arity) {
     String tableName = generateTempTableName();
 
-    SqlDatabaseTable table = createTable(tableName, arity, false);
+    SqlDatabaseTable table = createTable(tableName, arity, true);
     for (List<String> row : data) {
       insertIntoTable(table, row);
     }
@@ -272,7 +260,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
 
     StringBuilder sql = new StringBuilder();
     sql.append("INSERT IGNORE INTO");
-    sql.append(" ").append(unionTo.getRef());
+    sql.append(" ").append(unionTo.getFullRef());
     sql.append(" (`id`");
     for (int i = 0; i < columnCount; i++) {
       sql.append(", `_").append(i).append("`");
@@ -282,7 +270,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     for (int i = 0; i < columnCount; i++) {
       sql.append(", `_").append(i).append("`");
     }
-    sql.append(" FROM ").append(unionFrom.getRef()).append(";");
+    sql.append(" FROM ").append(unionFrom.getFullRef()).append(";");
     executeSql(sql.toString());
     return unionTo;
   }
@@ -290,12 +278,8 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   @Override
   public SqlDatabaseTable join(
       SqlDatabaseTable leftTable, SqlDatabaseTable rightTable, List<JoinRule> joinRules) {
-    String tableName = generateTempTableName();
     StringBuilder sql = new StringBuilder();
-    sql.append("CREATE VIEW");
-    sql.append(" `").append(tableName).append("`");
-    // TODO a better id
-    sql.append(" AS SELECT '0' AS `id`");
+    sql.append("SELECT '0' AS `id`");
 
     int leftColumnCount = getTableColumnCount(leftTable);
     int rightColumnCount = getTableColumnCount(rightTable);
@@ -328,13 +312,16 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
         if (i != joinRules.size() - 1) sql.append(" AND");
       }
     }
-    sql.append(";");
-    executeSql(sql.toString());
-    return new SqlDatabaseTable(tableName);
+    return new SqlDatabaseQueryTable(sql.toString());
   }
 
   @Override
   public TablePointerPair getTablePointer(SqlDatabaseTable table) {
+    if (!(table instanceof SqlDatabaseRefTable)) {
+      throw new IllegalArgumentException();
+    }
+    String tableName = ((SqlDatabaseRefTable) table).getName();
+
     Connection connection = SqlStorageEngine.getInstance().getConnection();
 
     try (ResultSet resultSet =
@@ -342,7 +329,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
                  .createStatement()
                  .executeQuery(
                      "SELECT last, current FROM `_table_pointer` WHERE `table_name`='"
-                         + table.getName()
+                         + tableName
                          + "';")) {
       // Has any result
       if (!resultSet.next()) {
@@ -357,8 +344,12 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
 
   @Override
   public int getTableTailPointer(SqlDatabaseTable table) {
+    if (!(table instanceof SqlDatabaseRefTable)) {
+      throw new IllegalArgumentException();
+    }
+    String tableName = ((SqlDatabaseRefTable) table).getName();
     Connection connection = SqlStorageEngine.getInstance().getConnection();
-    String sql = "SELECT MAX(id) AS tail FROM `" + table.getName() + "`";
+    String sql = "SELECT MAX(id) AS tail FROM `" + tableName + "`";
     LOG.debug(sql);
 
     try (ResultSet resultSet = connection.createStatement().executeQuery(sql)) {
@@ -371,11 +362,16 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
 
   @Override
   public void setTablePointer(SqlDatabaseTable table, TablePointerPair newTablePointer) {
+    if (!(table instanceof SqlDatabaseRefTable)) {
+      throw new IllegalArgumentException();
+    }
+    String tableName = ((SqlDatabaseRefTable) table).getName();
+
     int last = newTablePointer.getLastPointer();
     int current = newTablePointer.getCurrentPointer();
     String sql =
         "INSERT INTO `_table_pointer` (`table_name`, `last`, `current`) VALUES ('"
-            + table.getName()
+            + tableName
             + "', "
             + last
             + ", "
@@ -397,13 +393,13 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     Connection connection = SqlStorageEngine.getInstance().getConnection();
 
     try (ResultSet resultSet =
-             connection.createStatement().executeQuery("SELECT * FROM `" + table.getName() + "` LIMIT 0")) {
+             connection
+                 .createStatement()
+                 .executeQuery("SELECT * FROM " + table.getFullRef() + " LIMIT 0")) {
       int allColumnCount = resultSet.getMetaData().getColumnCount();
       return NumberUtils.toInt(
-          resultSet
-              .getMetaData()
-              .getColumnName(allColumnCount)
-              .substring(1), -1) + 1;
+          resultSet.getMetaData().getColumnName(allColumnCount).substring(1), -1)
+          + 1;
     } catch (SQLException cause) {
       throw new IllegalStateException("", cause);
     }

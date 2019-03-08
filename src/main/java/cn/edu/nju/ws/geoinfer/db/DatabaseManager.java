@@ -8,7 +8,7 @@ import cn.edu.nju.ws.geoinfer.data.rarule.SelectionRule;
 import java.util.List;
 
 public interface DatabaseManager<T extends DatabaseTable> {
-  T createTable(String tableName, int columnCount, boolean ignoreExist);
+  T createTable(String tableName, int columnCount, boolean dropExist);
 
   T getTable(String tableName);
 

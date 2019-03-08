@@ -46,11 +46,8 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
     predicateIsRecursiveMap = buildPredicateRecursiveMap();
     buildPredicateRules(program, sccResult.getBelong());
 
-    Long ts = System.nanoTime();
     for (List<Integer> scc : sccList) {
       generalSemiNaiveScc(scc);
-      Long te = System.nanoTime();
-      LOG.info("Elapsed {} ms", (te - ts) / 1000000);
     }
 
     return this.dbm.getTable(program.getGoal().getPredicate().getTableName());
@@ -178,6 +175,8 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
    * @param scc the scc to be evaluated
    */
   private void generalSemiNaiveScc(List<Integer> scc) {
+    Long ts = System.nanoTime();
+
     if (scc.isEmpty()) {
       throw new IllegalArgumentException();
     }
@@ -198,6 +197,9 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
         RuleApplier.applyRule(rule, dbm);
       }
     }
+
+    Long te = System.nanoTime();
+    LOG.info("SCC {} Elapsed {} ms", scc, (te - ts) / 1000000);
   }
 
   /**
@@ -211,7 +213,7 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
       LOG.debug("Clique has rule {}", rule);
       Predicate headPredicate = rule.getHead().getPredicate();
       int arity = rule.getHead().getTerms().size();
-      dbm.createTable(headPredicate.getTableName(), arity, true);
+      dbm.createTable(headPredicate.getTableName(), arity, false);
     }
     while (true) {
       boolean isContinue = false;

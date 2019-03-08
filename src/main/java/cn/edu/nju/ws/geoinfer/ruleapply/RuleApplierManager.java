@@ -26,7 +26,7 @@ public class RuleApplierManager<T extends DatabaseTable> {
 
     String name = rule.getHead().getPredicate().getTableName();
     int arity = rule.getHead().getTerms().size();
-    T outputTable = dbm.createTable(name, arity, true);
+    T outputTable = dbm.createTable(name, arity, false);
 
     // Work with fact
     if (rule.getBody().isEmpty()) {

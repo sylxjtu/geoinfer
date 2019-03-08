@@ -1,21 +1,7 @@
 package cn.edu.nju.ws.geoinfer.db;
 
-public class SqlDatabaseTable implements DatabaseTable {
-  private String name;
+public abstract class SqlDatabaseTable implements DatabaseTable {
+  abstract public String getRef();
 
-  public SqlDatabaseTable(String name) {
-    this.name = name;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getRef() {
-    return "`" + name + "`";
-  }
+  abstract public String getFullRef();
 }

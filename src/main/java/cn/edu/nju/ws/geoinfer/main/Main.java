@@ -34,7 +34,6 @@ public class Main {
 
     try {
       SqlStorageEngine.getInstance().initialize("jdbc:mysql://localhost:3306/geoinfer", "root", "");
-      // SqlStorageEngine.getInstance().initialize("jdbc:sqlite:geoinfer.db", "", "");
     } catch (SQLException cause) {
       throw new IllegalStateException("Failed to connect db", cause);
     }
