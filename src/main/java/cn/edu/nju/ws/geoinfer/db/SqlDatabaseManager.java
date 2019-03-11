@@ -3,6 +3,7 @@ package cn.edu.nju.ws.geoinfer.db;
 import cn.edu.nju.ws.geoinfer.data.miscellaneous.TablePointerPair;
 import cn.edu.nju.ws.geoinfer.data.rarule.*;
 import cn.edu.nju.ws.geoinfer.sql.SqlStorageEngine;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,11 +12,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   private static final Logger LOG = LoggerFactory.getLogger(SqlDatabaseManager.class);
+  private static final int BATCH_SIZE = 1024;
 
   /**
    * Create sql table
@@ -83,20 +86,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
    */
   @Override
   public SqlDatabaseTable insertIntoTable(SqlDatabaseTable table, List<String> row) {
-    StringBuilder sql = new StringBuilder();
-    sql.append("INSERT IGNORE INTO");
-    sql.append(" ").append(table.getFullRef());
-    sql.append(" (`id`, `uniq`");
-    for (int i = 0; i < row.size(); i++) {
-      sql.append(", `_").append(i).append("`");
-    }
-    sql.append(") VALUES (NULL, ").append(getRowMd5Sql(row));
-    for (String s : row) {
-      sql.append(", '").append(s).append("'");
-    }
-    sql.append(");");
-
-    executeSql(sql.toString());
+    executeSql(getInsertSql(table, Collections.singletonList(row)));
     return table;
   }
 
@@ -240,9 +230,10 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     String tableName = generateTempTableName();
 
     SqlDatabaseTable table = createTable(tableName, arity, true);
-    for (List<String> row : data) {
-      insertIntoTable(table, row);
+    for (List<List<String>> partition : Lists.partition(data, BATCH_SIZE)) {
+      executeSql(getInsertSql(table, partition));
     }
+
     return table;
   }
 
@@ -431,5 +422,28 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     String tempTableName = UUID.randomUUID().toString();
     SqlStorageEngine.getInstance().addCleanTable(tempTableName);
     return tempTableName;
+  }
+
+  private String getInsertSql(SqlDatabaseTable table, List<List<String>> rows) {
+    if (rows.isEmpty()) {
+      throw new IllegalArgumentException();
+    }
+    StringBuilder sql = new StringBuilder();
+    sql.append("INSERT IGNORE INTO");
+    sql.append(" ").append(table.getFullRef());
+    sql.append(" (`id`, `uniq`");
+    for (int i = 0; i < rows.get(0).size(); i++) {
+      sql.append(", `_").append(i).append("`");
+    }
+    sql.append(") VALUES");
+    for (List<String> row : rows) {
+      sql.append(" (NULL, ").append(getRowMd5Sql(row));
+      for (String s : row) {
+        sql.append(", '").append(s).append("'");
+      }
+      sql.append("),");
+    }
+    sql.setLength(sql.length() - 1);
+    return sql.toString();
   }
 }

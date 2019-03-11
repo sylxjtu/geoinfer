@@ -5,18 +5,12 @@ import cn.edu.nju.ws.geoinfer.utils.SimpleInferer;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class TestLongInfer {
   @Test
   public void testLongInfer() {
-    try {
-      SqlStorageEngine.getInstance().initialize("jdbc:mysql://localhost:3306/geoinfer_test", "root", "");
-    } catch (SQLException cause) {
-      throw new IllegalStateException("Failed to connect db", cause);
-    }
-
+    SqlStorageEngine.getInstance().initialize("jdbc:mysql://localhost:3306/geoinfer_test", "root", "");
     SqlStorageEngine.getInstance().bootstrap();
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < 1000; i++) {

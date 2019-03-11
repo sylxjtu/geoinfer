@@ -153,7 +153,7 @@ public class SupMagicTransformer implements Transformer {
       List<Atom> newRuleBody = new ArrayList<>();
       Rule newRule = new Rule(rule.getHead(), newRuleBody);
       int atomIndex = supMagicAtoms.get(ruleIndex).size() - 1;
-      if (needBound(rule.getHead())) {
+      if (needBound(rule.getHead()) || atomIndex > 0) {
         newRule.getBody().add(supMagicAtoms.get(ruleIndex).get(atomIndex));
       }
       for (int cloneAtomIndex = atomIndex;
@@ -172,7 +172,7 @@ public class SupMagicTransformer implements Transformer {
    * @param goal the goal of the new program, which has the initial binding
    */
   private void addSeed(Atom goal) {
-    outputRules.add(new Rule(adornedAtomToMagic(goal), new ArrayList<>()));
+    if (needBound(goal)) outputRules.add(new Rule(adornedAtomToMagic(goal), new ArrayList<>()));
   }
 
   /**

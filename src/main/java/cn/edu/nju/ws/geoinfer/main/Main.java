@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,12 +29,12 @@ public class Main {
   private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
   public static void main(String[] args) {
-    Long t1 = System.nanoTime();
+    boolean compileOnly = Arrays.asList(args).contains("-compile-only");
 
-    try {
+    long t1 = System.nanoTime();
+
+    if (!compileOnly) {
       SqlStorageEngine.getInstance().initialize("jdbc:mysql://localhost:3306/geoinfer", "root", "");
-    } catch (SQLException cause) {
-      throw new IllegalStateException("Failed to connect db", cause);
     }
 
     String ruleStr;
@@ -109,30 +108,38 @@ public class Main {
 
     Program program = (Program) new Visitor().visit(Parser.parse(ruleStr).logicRules());
 
-    Transformer transformer =
-        TransformerCombinator.combineTransformer(new SipTransformer(), new SupMagicTransformer());
+    LOG.debug("Original program:\n{}", program);
+
+    Transformer transformer = new SipTransformer();
     Program transformed = transformer.transform(program);
 
-    LOG.debug("Original program:\n{}", program);
-    LOG.debug("Transformed program:\n{}", transformed);
-    transformer =
-        TransformerCombinator.combineTransformer(new SipTransformer(), new SupMagicTransformer());
-    InferEngine engine = new BasicInferEngine(transformer, new SemiNaiveSolver());
-    engine.initialize(program);
-    SqlDatabaseManager dbm = new SqlDatabaseManager();
-    dbm.initializeTablePointer();
-    SqlDatabaseTable table = engine.solve(dbm);
-    List<List<String>> data = dbm.getData(table);
-    StringBuilder dataStr = new StringBuilder();
-    for (List<String> row : data) {
-      for (String cell : row) {
-        dataStr.append(cell).append(", ");
-      }
-      dataStr.append("\n");
-    }
-    LOG.info("Result:\n{}", dataStr);
+    LOG.debug("Transformed 1 program:\n{}", transformed);
 
-    Long t2 = System.nanoTime();
+    transformer = new SupMagicTransformer();
+    transformed = transformer.transform(transformed);
+
+    LOG.debug("Transformed 2 program:\n{}", transformed);
+
+    if (!compileOnly) {
+      transformer =
+          TransformerCombinator.combineTransformer(new SipTransformer(), new SupMagicTransformer());
+      InferEngine engine = new BasicInferEngine(transformer, new SemiNaiveSolver());
+      engine.initialize(program);
+      SqlDatabaseManager dbm = new SqlDatabaseManager();
+      dbm.initializeTablePointer();
+      SqlDatabaseTable table = engine.solve(dbm);
+      List<List<String>> data = dbm.getData(table);
+      StringBuilder dataStr = new StringBuilder();
+      for (List<String> row : data) {
+        for (String cell : row) {
+          dataStr.append(cell).append(", ");
+        }
+        dataStr.append("\n");
+      }
+      LOG.info("Result:\n{}", dataStr);
+    }
+
+    long t2 = System.nanoTime();
     LOG.info("Elapsed {} ms", (t2 - t1) / 1000000);
   }
 }

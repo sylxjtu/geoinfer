@@ -28,17 +28,17 @@ public class SqlStorageEngine {
 
   public void executeSql(String sql) {
     LOG.debug(sql);
-    Long ts = System.nanoTime();
+    long ts = System.nanoTime();
 
     try (Statement statement = connection.createStatement()) {
       statement.execute(sql);
     } catch (SQLException cause) {
       throw new IllegalStateException("", cause);
     }
-    Long te = System.nanoTime();
-    Long ms = (te - ts) / 1000000;
+    long te = System.nanoTime();
+    long ms = (te - ts) / 1000000;
     if (ms >= 100) {
-      LOG.info("SQL {}, elapsed {} ms", StringUtils.substring(sql, 0, 50), (te - ts) / 1000000);
+      LOG.warn("SQL {}, elapsed {} ms", StringUtils.substring(sql, 0, 50), (te - ts) / 1000000);
     }
   }
 
@@ -51,9 +51,14 @@ public class SqlStorageEngine {
     }
   }
 
-  public void initialize(String jdbcUrl, String username, String password) throws SQLException {
-    connection = DriverManager.getConnection(jdbcUrl, username, password);
-    connection.setAutoCommit(false);
+  public void initialize(String jdbcUrl, String username, String password) {
+    try {
+      connection = DriverManager.getConnection(jdbcUrl, username, password);
+      connection.setAutoCommit(false);
+    } catch (SQLException e) {
+      throw new IllegalStateException("", e);
+    }
+
     Runtime.getRuntime()
         .addShutdownHook(
             new Thread(

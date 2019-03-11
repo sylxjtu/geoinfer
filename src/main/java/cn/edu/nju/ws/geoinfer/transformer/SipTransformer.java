@@ -1,6 +1,7 @@
 package cn.edu.nju.ws.geoinfer.transformer;
 
 import cn.edu.nju.ws.geoinfer.data.program.*;
+import cn.edu.nju.ws.geoinfer.sip.SipStrategy;
 import cn.edu.nju.ws.geoinfer.utils.Utils;
 
 import java.util.*;
@@ -57,7 +58,7 @@ public class SipTransformer implements Transformer {
    *
    * @param rules input rules
    * @return a map which the key is predicate and value is the list of rules has this predicate as
-   * head
+   *     head
    */
   private Map<Predicate, List<Rule>> getHeadPredicateRuleListMap(List<Rule> rules) {
     Map<Predicate, List<Rule>> ret = new HashMap<>();
@@ -137,7 +138,7 @@ public class SipTransformer implements Transformer {
   /**
    * Transforms rule head
    *
-   * @param rule      the rule whose head needs to be transformed
+   * @param rule the rule whose head needs to be transformed
    * @param predicate new predicate
    * @return new rule head
    */
@@ -151,9 +152,9 @@ public class SipTransformer implements Transformer {
   /**
    * Transforms rule body
    *
-   * @param rule      the rule whose body needs to be transformed
+   * @param rule the rule whose body needs to be transformed
    * @param predicate new predicate
-   * @param newHead   new rule head
+   * @param newHead new rule head
    * @return new rule body
    */
   private List<Atom> getNewBody(Rule rule, AdornPredicate predicate, Atom newHead) {
@@ -176,7 +177,10 @@ public class SipTransformer implements Transformer {
     // If rule has empty body (fact), new rule will have empty body too
     for (int selectCount = 0; selectCount < rule.getBody().size(); selectCount++) {
       // Add new atom to new rule
-      ret.add(selectAtomToAppend(rule, selected, boundVariables));
+      int selectedAtomIndex = selectAtomToAppend(rule, selected, boundVariables);
+      selected[selectedAtomIndex] = true;
+      Atom transformedAtom = transformAtom(rule.getBody().get(selectedAtomIndex), boundVariables);
+      ret.add(transformedAtom);
     }
     return ret;
   }
@@ -184,76 +188,74 @@ public class SipTransformer implements Transformer {
   /**
    * Select a atom to append to new rule body using bound variable count heuristics
    *
-   * @param rule           original rule
-   * @param selected       selected rule body
+   * @param rule original rule
+   * @param selected selected rule body
    * @param boundVariables bounded variables
    * @return selected atom
    */
-  private Atom selectAtomToAppend(Rule rule, boolean[] selected, Set<String> boundVariables) {
-    // Initialize max bound count to -1
-    int maxBoundCount = -1;
-    int maxBoundVar = -1;
-    String currentAdorn = "";
+  private int selectAtomToAppend(Rule rule, boolean[] selected, Set<String> boundVariables) {
+    // Initialize candidate index to -1
+    int candidateIndex = -1;
 
-    // Find atom with maximum bound count
+    // Find atom with heuristics
     // Stop when we encounter builtin atom (the calculation order of builtin is determined by the
     // programmer)
-    for (int j = 0; j < rule.getBody().size(); j++) {
-      if (selected[j]) continue;
-      Atom atom = rule.getBody().get(j);
+    for (int atomIndex = 0; atomIndex < rule.getBody().size(); atomIndex++) {
+      if (selected[atomIndex]) continue;
+      Atom atom = rule.getBody().get(atomIndex);
+      Atom candidate = candidateIndex == -1 ? null : rule.getBody().get(candidateIndex);
 
       boolean shouldForceSip =
           (atom.getPredicate() instanceof BuiltinPredicate
               || atom.getPredicate() instanceof ForceSipPredicate);
 
-      // Builtin predicate will be calculated only after all atom before it are calculated
-      if (shouldForceSip && maxBoundCount != -1) break;
-
-      StringBuilder adorn = new StringBuilder();
-      int currentBoundCount = 0;
-      for (Term term : atom.getTerms()) {
-        if (term instanceof Constant) {
-          adorn.append('b');
-          currentBoundCount++;
-        } else if (term instanceof Variable) {
-          if (boundVariables.contains(((Variable) term).getName())) {
-            adorn.append('b');
-            currentBoundCount++;
-          } else {
-            adorn.append('f');
-          }
-        } else {
-          throw new IllegalArgumentException();
-        }
+      if (shouldForceSip) return candidate == null ? atomIndex : candidateIndex;
+      if (candidate == null || SipStrategy.compare(candidate, atom, boundVariables, derivedPredicateSet) > 0) {
+        candidateIndex = atomIndex;
       }
-      if (currentBoundCount > maxBoundCount || shouldForceSip) {
-        maxBoundCount = currentBoundCount;
-        maxBoundVar = j;
-        currentAdorn = adorn.toString();
-      }
-      if (shouldForceSip) break;
     }
 
-    // Update according to the new atom
-    Atom bodyAtom = Utils.clone(rule.getBody().get(maxBoundVar));
-    selected[maxBoundVar] = true;
-    for (Term term : bodyAtom.getTerms()) {
+    return candidateIndex;
+  }
+
+  private Atom transformAtom(Atom atom, Set<String> boundVariables) {
+    Atom newAtom = Utils.clone(atom);
+
+    StringBuilder adorn = new StringBuilder();
+    for (Term term : atom.getTerms()) {
+      if (term instanceof Constant) {
+        adorn.append('b');
+      } else if (term instanceof Variable) {
+        if (boundVariables.contains(((Variable) term).getName())) {
+          adorn.append('b');
+        } else {
+          adorn.append('f');
+        }
+      } else {
+        throw new IllegalArgumentException();
+      }
+    }
+
+    // Add new bound variables to the set
+    for (Term term : newAtom.getTerms()) {
       Utils.termMapIfVar(term, boundVariables::add);
     }
 
     // Add the newly produced adorn predicate for further computation
     // Only derived predicate is added since only derived predicate is used in rule head
-    Predicate predicate = bodyAtom.getPredicate();
+    Predicate predicate = newAtom.getPredicate();
     // Convert force sip predicate to raw predicate since we don't need them
     if (predicate instanceof ForceSipPredicate) {
       predicate = new RawPredicate(predicate.getFullName());
     }
     if (derivedPredicateSet.contains(predicate)) {
-      AdornPredicate adornPredicate = new AdornPredicate(predicate, currentAdorn);
-      bodyAtom.setPredicate(adornPredicate);
+      AdornPredicate adornPredicate = new AdornPredicate(predicate, adorn.toString());
+      newAtom.setPredicate(adornPredicate);
       addPredicate(adornPredicate);
+    } else {
+      newAtom.setPredicate(predicate);
     }
 
-    return bodyAtom;
+    return newAtom;
   }
 }

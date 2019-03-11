@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b1fdf36-2be4-484c-9327-7e4a68937f4e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rules/rule_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rules/rule_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sql/SqlStorageEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sql/SqlStorageEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SipTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SipTransformer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SupMagicTransformer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SupMagicTransformer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestLongInfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestLongInfer.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -121,13 +130,99 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplierManager.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/solver/SemiNaiveSolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="489">
-              <caret line="215" column="56" selection-start-line="215" selection-start-column="56" selection-end-line="215" selection-end-column="56" />
+            <state relative-caret-position="180">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplierManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="149">
+              <caret line="104" selection-start-line="104" selection-end-line="104" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/solver/SemiNaiveSolverManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="149">
+              <caret line="184" column="28" selection-start-line="184" selection-start-column="28" selection-end-line="184" selection-end-column="28" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplier.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="157">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="80">
+              <caret line="67" column="3" lean-forward="true" selection-start-line="67" selection-start-column="3" selection-end-line="67" selection-end-column="3" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#13312#13313#0" expanded="true" />
+                <element signature="e#13368#13369#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sql/SqlStorageEngine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="229">
+              <caret line="38" column="34" lean-forward="true" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rules/rule_1.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="131">
+              <caret line="22" column="73" selection-start-line="22" selection-start-column="73" selection-end-line="22" selection-end-column="73" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/sql/Statement.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="277">
+              <caret line="589" column="10" selection-start-line="589" selection-start-column="10" selection-end-line="589" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -135,38 +230,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/main/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="128" column="42" lean-forward="true" selection-start-line="128" selection-start-column="42" selection-end-line="128" selection-end-column="42" />
+            <state relative-caret-position="20">
+              <caret line="143" column="8" selection-start-line="143" selection-start-column="8" selection-end-line="143" selection-end-column="8" />
+              <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
-              <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/util/stream/Stream.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4460">
-              <caret line="269" column="18" selection-start-line="269" selection-start-column="18" selection-end-line="269" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SupMagicTransformer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3200">
-              <caret line="163" column="7" selection-start-line="163" selection-start-column="7" selection-end-line="163" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -184,9 +253,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>si</find>
-      <find>hash</find>
-      <find>tostring</find>
       <find>getfull</find>
       <find>\n</find>
       <find>\\</find>
@@ -213,6 +279,10 @@
       <find>memory</find>
       <find>_ff</find>
       <find>add</find>
+      <find>needBound</find>
+      <find>put</find>
+      <find>500</find>
+      <find>statement</find>
     </findStrings>
     <replaceStrings>
       <replace>LOG.debug</replace>
@@ -228,12 +298,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/data/program/BuiltinPredicate.java" />
-        <option value="$PROJECT_DIR$/src/main/java/data/program/DeltaOldPredicate.java" />
-        <option value="$PROJECT_DIR$/src/main/java/data/program/OldPredicate.java" />
-        <option value="$PROJECT_DIR$/src/main/java/db/DatabaseManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ruleapply/RuleApplierManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/solver/SemiNaiveSolverManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/main/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/db/SqlDatabaseManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/algorithm/graph/SccResult.java" />
@@ -253,22 +317,14 @@
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseRefTable.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseQueryTable.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/solver/SemiNaiveSolverManager.java" />
-        <option value="$PROJECT_DIR$/rules/rule_1.txt" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sql/SqlStorageEngine.java" />
-        <option value="$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestLongInfer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/IdTransformer.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/simpleInferrer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SupMagicTransformer.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/simpleInferer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/data/program/RawPredicate.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SipTransformer.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseTable.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/rete/ReteTransformer.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/solver/ReteSolver.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/rete/ReteSolverManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/main/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/rete/AlphaNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/rete/ConstantFilterAlphaNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/rete/BetaNode.java" />
@@ -276,9 +332,23 @@
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/rete/ReteAlphaNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/rete/ReteBetaNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/rete/ConstantFilterNode.java" />
-        <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/rete/JoinNode.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategyData.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategyState.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategyImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategyStateImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategy.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SipTransformer.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/rules/rule_1.txt" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java" />
+        <option value="$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestLongInfer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SupMagicTransformer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/engine/BasicInferEngine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/main/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sql/SqlStorageEngine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java" />
       </list>
     </option>
   </component>
@@ -288,8 +358,8 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="72" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="163" />
     <option name="y" value="-9" />
     <option name="width" value="1840" />
     <option name="height" value="1100" />
@@ -410,6 +480,22 @@
               <item name="geoinfer" type="b2602c69:ProjectViewProjectNode" />
               <item name="geoinfer" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
+            <path>
+              <item name="geoinfer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="geoinfer" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="rules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="geoinfer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="geoinfer" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="geoinfer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="geoinfer" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -443,7 +529,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="SonarLintApp" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -467,7 +553,22 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TestLongInfer.testLongInfer">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main compile only" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="cn.edu.nju.ws.geoinfer.main.Main" />
+      <module name="geoinfer_main" />
+      <option name="PROGRAM_PARAMETERS" value="-compile-only" />
+      <option name="VM_PARAMETERS" value="-ea -Dorg.slf4j.simpleLogger.defaultLogLevel=debug" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.edu.nju.ws.geoinfer.main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main debug" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="cn.edu.nju.ws.geoinfer.main.Main" />
       <module name="geoinfer_main" />
@@ -550,6 +651,7 @@
     <list>
       <item itemvalue="Application.Main debug" />
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Main compile only" />
       <item itemvalue="Application.Main warn" />
       <item itemvalue="Gradle.geoinfer [generateGrammarSource]" />
       <item itemvalue="JUnit.TestLongInfer.testLongInfer" />
@@ -586,7 +688,7 @@
       <workItem from="1552048313969" duration="2292000" />
       <workItem from="1552102312170" duration="4211000" />
       <workItem from="1552132136760" duration="4793000" />
-      <workItem from="1552272059719" duration="1251000" />
+      <workItem from="1552272059719" duration="22872000" />
     </task>
     <task id="LOCAL-00001" summary="first editon">
       <created>1551937966785</created>
@@ -627,27 +729,39 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestLongInfer_testLongInfer - 2019.03.08 at 17h 01m 39s.xml">
+    <history-entry file="TestLongInfer_testLongInfer - 2019.03.11 at 16h 49m 45s.xml">
       <configuration name="TestLongInfer.testLongInfer" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestLongInfer_testLongInfer - 2019.03.08 at 17h 02m 46s.xml">
+    <history-entry file="TestLongInfer_testLongInfer - 2019.03.11 at 16h 52m 41s.xml">
       <configuration name="TestLongInfer.testLongInfer" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestLongInfer_testLongInfer - 2019.03.08 at 17h 14m 10s.xml">
+    <history-entry file="TestLongInfer_testLongInfer - 2019.03.11 at 16h 53m 48s.xml">
       <configuration name="TestLongInfer.testLongInfer" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestLongInfer_testLongInfer - 2019.03.08 at 17h 29m 35s.xml">
+    <history-entry file="TestLongInfer_testLongInfer - 2019.03.11 at 17h 58m 55s.xml">
       <configuration name="TestLongInfer.testLongInfer" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestLongInfer_testLongInfer - 2019.03.08 at 19h 49m 27s.xml">
+    <history-entry file="TestLongInfer_testLongInfer - 2019.03.11 at 18h 00m 12s.xml">
       <configuration name="TestLongInfer.testLongInfer" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestLongInfer_testLongInfer - 2019.03.08 at 20h 24m 44s.xml">
+    <history-entry file="TestLongInfer_testLongInfer - 2019.03.11 at 18h 01m 55s.xml">
+      <configuration name="TestLongInfer.testLongInfer" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestLongInfer_testLongInfer - 2019.03.11 at 18h 02m 52s.xml">
+      <configuration name="TestLongInfer.testLongInfer" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestLongInfer_testLongInfer - 2019.03.11 at 18h 11m 09s.xml">
+      <configuration name="TestLongInfer.testLongInfer" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestLongInfer_testLongInfer - 2019.03.11 at 18h 15m 32s.xml">
+      <configuration name="TestLongInfer.testLongInfer" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestLongInfer_testLongInfer - 2019.03.11 at 18h 22m 20s.xml">
       <configuration name="TestLongInfer.testLongInfer" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="149669000" />
+    <option name="totallyTimeSpent" value="171290000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -660,7 +774,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="71" y="-7" width="1472" height="878" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="UI Designer" order="0" />
       <window_info id="Favorites" order="1" side_tool="true" />
@@ -681,7 +794,7 @@
       <window_info anchor="bottom" id="Build" order="11" weight="0.32931727" />
       <window_info anchor="bottom" id="Message" order="12" />
       <window_info anchor="bottom" id="Find" order="13" weight="0.32841823" />
-      <window_info anchor="bottom" id="Run" order="14" sideWeight="0.4992928" weight="0.3297587" />
+      <window_info anchor="bottom" id="Run" order="14" sideWeight="0.4992928" visible="true" weight="0.3297587" />
       <window_info anchor="bottom" id="Debug" order="15" weight="0.39812332" />
       <window_info anchor="bottom" id="Cvs" order="16" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="17" weight="0.4" />
@@ -759,204 +872,10 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/simplelogger.properties" />
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-simple/1.7.26/e4804203f5f65c4762798b172418e0812d29b8c3/slf4j-simple-1.7.26-sources.jar!/org/slf4j/impl/SimpleLogger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3080">
-          <caret line="185" column="48" selection-start-line="185" selection-start-column="48" selection-end-line="185" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-simple/1.7.26/e4804203f5f65c4762798b172418e0812d29b8c3/slf4j-simple-1.7.26-sources.jar!/org/slf4j/impl/SimpleLoggerConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1200">
-          <caret line="71" column="78" selection-start-line="71" selection-start-column="78" selection-end-line="71" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/engine/InferEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sql/package-info.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/engine/BasicInferEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="31" column="23" lean-forward="true" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/DatabaseManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="431">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/solver/Solver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/DatabaseTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/builtin/BuiltinRegistry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.8.1/e9748d7783594da3735ad9724390a10e7cebc01d/commons-lang3-3.8.1-sources.jar!/org/apache/commons/lang3/Range.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseQueryTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="e#168#169#0" expanded="true" />
-            <element signature="e#196#197#0" expanded="true" />
-            <element signature="e#226#227#0" expanded="true" />
-            <element signature="e#248#249#0" expanded="true" />
-            <element signature="e#288#289#0" expanded="true" />
-            <element signature="e#316#317#0" expanded="true" />
-            <element signature="e#356#357#0" expanded="true" />
-            <element signature="e#390#391#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseRefTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="24" column="26" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
-          <folding>
-            <element signature="e#419#420#0" expanded="true" />
-            <element signature="e#452#453#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/builtin/BuiltinProcedure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/a6c32b40bf3d76eca54e3c601e5d1470c86fcdfa/junit-4.12-sources.jar!/junit/framework/Assert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="e#2268#2269#0" expanded="true" />
-            <element signature="e#2320#2321#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="920">
-          <caret line="58" column="52" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/Transformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/IdTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-          <folding>
-            <element signature="e#238#239#0" expanded="true" />
-            <element signature="e#262#263#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestLongInfer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="40" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rules/rule.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/rete/ReteTransformer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/solver/SemiNaiveSolverManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3860">
-          <caret line="204" column="5" selection-start-line="204" selection-start-column="5" selection-end-line="204" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/solver/SemiNaiveSolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="9" column="44" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rules/rule_1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
@@ -967,30 +886,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="497">
           <caret line="62" column="24" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="21" column="50" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="22" column="85" selection-start-line="22" selection-start-column="85" selection-end-line="22" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sql/SqlStorageEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="46" column="24" selection-start-line="46" selection-start-column="24" selection-end-line="46" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1008,13 +903,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SipTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="200" column="4" selection-start-line="200" selection-start-column="4" selection-end-line="200" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-collections4/4.3/39cad5b88a6f80ef9222a8054a3e5283efde3dde/commons-collections4-4.3-sources.jar!/org/apache/commons/collections4/ListUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="419">
@@ -1026,16 +914,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1061,13 +939,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4460">
           <caret line="269" column="18" selection-start-line="269" selection-start-column="18" selection-end-line="269" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SupMagicTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3200">
-          <caret line="163" column="7" selection-start-line="163" selection-start-column="7" selection-end-line="163" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -1143,10 +1014,225 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategyData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#175#176#0" expanded="true" />
+            <element signature="e#221#222#0" expanded="true" />
+            <element signature="e#265#266#0" expanded="true" />
+            <element signature="e#296#297#0" expanded="true" />
+            <element signature="e#359#360#0" expanded="true" />
+            <element signature="e#405#406#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategyImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategyState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategyStateImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="37" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
+          <folding>
+            <element signature="e#213#214#0" expanded="true" />
+            <element signature="e#259#260#0" expanded="true" />
+            <element signature="e#303#304#0" expanded="true" />
+            <element signature="e#334#335#0" expanded="true" />
+            <element signature="e#397#398#0" expanded="true" />
+            <element signature="e#443#444#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/data/program/Term.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/data/program/ForceSipPredicate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/lang/Float.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="415" selection-start-line="415" selection-end-line="415" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/util/stream/ReferencePipeline.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="192" selection-start-line="192" selection-end-line="192" />
+          <folding>
+            <element signature="e#6089#6090#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/jre/lib/rt.jar!/sun/misc/FloatingDecimal.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/builtin/BuiltinRegistry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="e#860#861#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hs_err_pid2124.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5940" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1213#1222#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SupMagicTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="174" column="23" selection-start-line="174" selection-start-column="23" selection-end-line="174" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/SipTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="477">
+          <caret line="259" column="3" selection-start-line="259" selection-start-column="3" selection-end-line="259" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2512#2523#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/engine/InferEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/DatabaseManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestLongInfer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/engine/BasicInferEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplierManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="489">
-          <caret line="215" column="56" selection-start-line="215" selection-start-column="56" selection-end-line="215" selection-end-column="56" />
+        <state relative-caret-position="149">
+          <caret line="104" selection-start-line="104" selection-end-line="104" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/solver/SemiNaiveSolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/jre/lib/jfr.jar!/oracle/jrockit/jfr/Logger.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="62" column="10" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/solver/SemiNaiveSolverManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="184" column="28" selection-start-line="184" selection-start-column="28" selection-end-line="184" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1155,18 +1241,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/main/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="128" column="42" lean-forward="true" selection-start-line="128" selection-start-column="42" selection-end-line="128" selection-end-column="42" />
+        <state relative-caret-position="20">
+          <caret line="143" column="8" selection-start-line="143" selection-start-column="8" selection-end-line="143" selection-end-column="8" />
+          <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/sql/Statement.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+        <state relative-caret-position="277">
+          <caret line="589" column="10" selection-start-line="589" selection-start-column="10" selection-end-line="589" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="67" column="3" lean-forward="true" selection-start-line="67" selection-start-column="3" selection-end-line="67" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#13312#13313#0" expanded="true" />
+            <element signature="e#13368#13369#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/sql/SqlStorageEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="38" column="34" lean-forward="true" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rules/rule_1.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="22" column="73" selection-start-line="22" selection-start-column="73" selection-end-line="22" selection-end-column="73" />
         </state>
       </provider>
     </entry>
