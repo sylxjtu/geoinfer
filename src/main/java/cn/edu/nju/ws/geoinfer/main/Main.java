@@ -1,6 +1,5 @@
 package cn.edu.nju.ws.geoinfer.main;
 
-import cn.edu.nju.ws.geoinfer.builtin.BuiltinRegistry;
 import cn.edu.nju.ws.geoinfer.data.program.Program;
 import cn.edu.nju.ws.geoinfer.db.SqlDatabaseManager;
 import cn.edu.nju.ws.geoinfer.db.SqlDatabaseTable;
@@ -14,16 +13,12 @@ import cn.edu.nju.ws.geoinfer.transformer.SipTransformer;
 import cn.edu.nju.ws.geoinfer.transformer.SupMagicTransformer;
 import cn.edu.nju.ws.geoinfer.transformer.Transformer;
 import cn.edu.nju.ws.geoinfer.transformer.TransformerCombinator;
-import org.apache.commons.io.FileUtils;
+import cn.edu.nju.ws.geoinfer.utils.Initializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Main {
   private static final Logger LOG = LoggerFactory.getLogger(Main.class);
@@ -34,77 +29,12 @@ public class Main {
     long t1 = System.nanoTime();
 
     if (!compileOnly) {
-      SqlStorageEngine.getInstance().initialize("jdbc:mysql://localhost:3306/geoinfer", "root", "");
+      SqlStorageEngine.getInstance()
+          .initialize("jdbc:mysql://localhost:3306/geoinfer", "root", "", true);
     }
 
-    String ruleStr;
-    try {
-      ruleStr = FileUtils.readFileToString(new File("rules/rule_1.txt"), StandardCharsets.UTF_8);
-    } catch (IOException cause) {
-      throw new IllegalStateException("Failed to get rules", cause);
-    }
-
-    BuiltinRegistry.getInstance()
-        .register(
-            "concat",
-            inputData ->
-                inputData.stream()
-                    .map(row -> Arrays.asList(row.get(0), row.get(1), row.get(0) + row.get(1)))
-                    .collect(Collectors.toList()),
-            3);
-
-    BuiltinRegistry.getInstance()
-        .register(
-            "minus",
-            inputData ->
-                inputData.stream()
-                    .map(
-                        row ->
-                            Arrays.asList(
-                                row.get(0),
-                                row.get(1),
-                                String.valueOf(
-                                    Float.valueOf(row.get(0)) - Float.valueOf(row.get(1)))))
-                    .collect(Collectors.toList()),
-            3);
-
-    BuiltinRegistry.getInstance()
-        .register(
-            "addmod",
-            inputData ->
-                inputData.stream()
-                    .map(
-                        row ->
-                            Arrays.asList(
-                                row.get(0),
-                                row.get(1),
-                                row.get(2),
-                                String.valueOf(
-                                    (Float.valueOf(row.get(0)) + Float.valueOf(row.get(1)) + Float.valueOf(row.get(2))) % Float.valueOf(row.get(2))
-                                )))
-                    .collect(Collectors.toList()),
-            4);
-
-    BuiltinRegistry.getInstance()
-        .register(
-            "cal_time_delta",
-            inputData ->
-                inputData.stream()
-                    .map(
-                        row ->
-                            Arrays.asList(
-                                row.get(0), String.valueOf(Float.valueOf(row.get(0)) / 360 * 24)))
-                    .collect(Collectors.toList()),
-            2);
-
-    BuiltinRegistry.getInstance()
-        .register(
-            "greater_than",
-            inputData ->
-                inputData.stream()
-                    .filter(row -> Float.valueOf(row.get(0)) > Float.valueOf(row.get(1)))
-                    .collect(Collectors.toList()),
-            2);
+    String ruleStr = Initializer.getRuleFromFile("rules/geonames_medium_force_sip.txt");
+    Initializer.registerBuiltins();
 
     Program program = (Program) new Visitor().visit(Parser.parse(ruleStr).logicRules());
 

@@ -44,7 +44,7 @@ public class RuleApplierManager<T extends DatabaseTable> {
         T selectedTable = selectFields(currentTable, currentVarFields, atom, dbm);
         List<List<String>> transformedData =
             BuiltinRegistry.getInstance().call(predicate.getName(), dbm.getData(selectedTable));
-        atomTable = dbm.putData(transformedData, BuiltinRegistry.getInstance().getArity(predicate.getName()));
+        atomTable = dbm.putData(transformedData, BuiltinRegistry.getInstance().getArity(predicate.getName()), null);
       } else {
         atomTable = dbm.getTable(tableName);
       }

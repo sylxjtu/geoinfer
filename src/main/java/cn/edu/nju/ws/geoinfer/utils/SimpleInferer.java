@@ -12,6 +12,8 @@ import cn.edu.nju.ws.geoinfer.transformer.SipTransformer;
 import cn.edu.nju.ws.geoinfer.transformer.SupMagicTransformer;
 import cn.edu.nju.ws.geoinfer.transformer.Transformer;
 import cn.edu.nju.ws.geoinfer.transformer.TransformerCombinator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -19,8 +21,9 @@ import java.util.List;
  * All-in-one inference engine
  */
 public class SimpleInferer {
-  private SimpleInferer() {
-  }
+  private static final Logger LOG = LoggerFactory.getLogger(SimpleInferer.class);
+
+  private SimpleInferer() {}
 
   /**
    * Do all-in-one infer, requires db initialization
@@ -28,7 +31,9 @@ public class SimpleInferer {
    * @param programStr the program (rules & goal) in a string
    * @return the inferred result
    */
-  public static List<List<String>> infer(String programStr) {
+  public static List<List<String>> infer(String programStr, String tag) {
+    long ts = System.nanoTime();
+
     Program program = (Program) new Visitor().visit(Parser.parse(programStr).logicRules());
     Transformer transformer =
         TransformerCombinator.combineTransformer(new SipTransformer(), new SupMagicTransformer());
@@ -37,6 +42,9 @@ public class SimpleInferer {
     SqlDatabaseManager dbm = new SqlDatabaseManager();
     dbm.initializeTablePointer();
     SqlDatabaseTable table = engine.solve(dbm);
+
+    long te = System.nanoTime();
+    LOG.warn("Inference of {} elapsed {} ms", tag, (te - ts) / 1000000);
     return dbm.getData(table);
   }
 }

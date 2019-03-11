@@ -226,8 +226,8 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   }
 
   @Override
-  public SqlDatabaseTable putData(List<List<String>> data, int arity) {
-    String tableName = generateTempTableName();
+  public SqlDatabaseTable putData(List<List<String>> data, int arity, String tableName) {
+    if (tableName == null) tableName = generateTempTableName();
 
     SqlDatabaseTable table = createTable(tableName, arity, true);
     for (List<List<String>> partition : Lists.partition(data, BATCH_SIZE)) {

@@ -1,0 +1,9 @@
+% 读图，一艘由大平洋驶向大西洋的船经过P地（图中左上角）时，一名中国船员拍摄到海上落日景现，洗印出的照片上显示拍照时间为9时0分0秒（北京时间）。据此判断1—4题。
+% 该船员拍摄照片时，P地的地方时为
+lat("P", "-75.0").
+time_known("Beijing", "9.0").
+lat(City, Lat) :- geonames(A,B,City,D,Long,Lat,G,H,I,J,K,L,M,N,O,P,Q,TimeZone,S).
+lat_delta(City1, City2, LatDelta) :- lat(City1, Lat1), lat(City2, Lat2), @minus(Lat1, Lat2, LatDelta).
+time_delta(City1, City2, TimeDeltaInHour) :- lat_delta(City1, City2, LatDelta), @cal_time_delta(LatDelta, TimeDeltaInHour).
+time(City, TimeInHour) :- time_known(City2, Time2), time_delta(City, City2, TimeDeltaInHour), @addmod(Time2, TimeDeltaInHour, "24.0", TimeInHour).
+?- time("P", TimeInHour).

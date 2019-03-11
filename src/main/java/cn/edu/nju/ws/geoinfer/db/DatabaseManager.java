@@ -5,6 +5,7 @@ import cn.edu.nju.ws.geoinfer.data.rarule.FilterRule;
 import cn.edu.nju.ws.geoinfer.data.rarule.JoinRule;
 import cn.edu.nju.ws.geoinfer.data.rarule.SelectionRule;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public interface DatabaseManager<T extends DatabaseTable> {
@@ -24,7 +25,7 @@ public interface DatabaseManager<T extends DatabaseTable> {
 
   List<List<String>> getData(T table);
 
-  T putData(List<List<String>> data, int arity);
+  T putData(List<List<String>> data, int arity, @Nullable String tableName);
 
   T union(T unionTo, T unionFrom);
 

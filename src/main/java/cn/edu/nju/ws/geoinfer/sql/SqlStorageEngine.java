@@ -16,10 +16,10 @@ public class SqlStorageEngine {
 
   private static SqlStorageEngine ourInstance = new SqlStorageEngine();
   private Connection connection;
-  private List<String> cleanTables;
+  private List<String> tablesToBeCleaned;
 
   private SqlStorageEngine() {
-    cleanTables = new ArrayList<>();
+    tablesToBeCleaned = new ArrayList<>();
   }
 
   public static SqlStorageEngine getInstance() {
@@ -51,7 +51,8 @@ public class SqlStorageEngine {
     }
   }
 
-  public void initialize(String jdbcUrl, String username, String password) {
+  public void initialize(
+      String jdbcUrl, String username, String password, boolean needToCleanTables) {
     try {
       connection = DriverManager.getConnection(jdbcUrl, username, password);
       connection.setAutoCommit(false);
@@ -63,8 +64,10 @@ public class SqlStorageEngine {
         .addShutdownHook(
             new Thread(
                 () -> {
-                  for (String tableName : cleanTables) {
-                    executeSql("DROP TABLE IF EXISTS `" + tableName + "`;");
+                  if (needToCleanTables) {
+                    for (String tableName : tablesToBeCleaned) {
+                      executeSql("DROP TABLE IF EXISTS `" + tableName + "`;");
+                    }
                   }
                   try {
                     connection.commit();
@@ -78,14 +81,14 @@ public class SqlStorageEngine {
     executeSql(
         "CREATE TABLE IF NOT EXISTS `_table_pointer` (\n"
             + "  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,\n"
-            + "  `table_name` varchar(255) NOT NULL,\n"
+            + "  `table_name` varchar(255) NOT NULL UNIQUE,\n"
             + "  `last` int(11) NOT NULL,\n"
             + "  `current` int(11) NOT NULL\n"
-            + ") ENGINE=InnoDB DEFAULT CHARSET=utf8;\n");
+            + ") ENGINE=MEMORY;\n");
   }
 
   public void addCleanTable(String tempTableName) {
-    cleanTables.add(tempTableName);
+    tablesToBeCleaned.add(tempTableName);
   }
 
   public Connection getConnection() {
