@@ -1,6 +1,5 @@
 package cn.edu.nju.ws.geoinfer;
 
-import cn.edu.nju.ws.geoinfer.sql.SqlStorageEngine;
 import cn.edu.nju.ws.geoinfer.testutils.TestUtils;
 import cn.edu.nju.ws.geoinfer.utils.Initializer;
 import cn.edu.nju.ws.geoinfer.utils.SimpleInferer;
@@ -17,11 +16,7 @@ public class TestGeoNamesSimple {
 
   @Test
   public void testGeoNamesSimple() {
-    SqlStorageEngine.getInstance().initialize("jdbc:mysql://localhost:3306/", "root", "", false);
-    SqlStorageEngine.getInstance().executeSql(String.format("DROP DATABASE IF EXISTS `%s`", DB));
-    SqlStorageEngine.getInstance().executeSql(String.format("CREATE DATABASE `%s`", DB));
-    SqlStorageEngine.getInstance().executeSql(String.format("USE `%s`", DB));
-    SqlStorageEngine.getInstance().bootstrap();
+    TestUtils.bootstrapDatabase(DB);
     TestUtils.importGeoNames();
 
     String rule = Initializer.getRuleFromFile(RULE_FILE);
@@ -29,6 +24,7 @@ public class TestGeoNamesSimple {
 
     List<List<String>> result = SimpleInferer.infer(rule, "geonames_simple");
     Assert.assertEquals(Collections.singletonList(Collections.singletonList("Beijing")), result);
-    SqlStorageEngine.getInstance().executeSql(String.format("DROP DATABASE `%s`", DB));
+
+    TestUtils.finalizeDatabase(DB);
   }
 }

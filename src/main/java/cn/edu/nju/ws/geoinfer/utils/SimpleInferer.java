@@ -8,10 +8,7 @@ import cn.edu.nju.ws.geoinfer.engine.InferEngine;
 import cn.edu.nju.ws.geoinfer.parser.Parser;
 import cn.edu.nju.ws.geoinfer.parser.Visitor;
 import cn.edu.nju.ws.geoinfer.solver.SemiNaiveSolver;
-import cn.edu.nju.ws.geoinfer.transformer.SipTransformer;
-import cn.edu.nju.ws.geoinfer.transformer.SupMagicTransformer;
-import cn.edu.nju.ws.geoinfer.transformer.Transformer;
-import cn.edu.nju.ws.geoinfer.transformer.TransformerCombinator;
+import cn.edu.nju.ws.geoinfer.transformer.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,11 +32,12 @@ public class SimpleInferer {
     long ts = System.nanoTime();
 
     Program program = (Program) new Visitor().visit(Parser.parse(programStr).logicRules());
+    SqlDatabaseManager dbm = new SqlDatabaseManager();
     Transformer transformer =
-        TransformerCombinator.combineTransformer(new SipTransformer(), new SupMagicTransformer());
+        TransformerCombinator.combineTransformer(
+            new ExtractFactTransformer(dbm), new SipTransformer(dbm), new SupMagicTransformer());
     InferEngine engine = new BasicInferEngine(transformer, new SemiNaiveSolver());
     engine.initialize(program);
-    SqlDatabaseManager dbm = new SqlDatabaseManager();
     dbm.initializeTablePointer();
     SqlDatabaseTable table = engine.solve(dbm);
 

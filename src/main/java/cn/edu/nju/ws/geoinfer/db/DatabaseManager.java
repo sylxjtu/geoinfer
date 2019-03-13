@@ -35,6 +35,10 @@ public interface DatabaseManager<T extends DatabaseTable> {
 
   int getTableTailPointer(T table);
 
+  int getTableSize(T table);
+
+  int getTableSize(String tableName);
+
   void setTablePointer(T table, TablePointerPair newTablePointer);
 
   void initializeTablePointer();

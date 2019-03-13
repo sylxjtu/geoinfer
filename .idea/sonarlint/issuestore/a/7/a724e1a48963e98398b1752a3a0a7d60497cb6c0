@@ -1,5 +1,5 @@
 
-msquid:S1192~"ODefine a constant instead of duplicating this literal "SELECT * FROM " 4 times.(¤ÑšÍ8šĞšÜ•-
-esquid:S1192"GDefine a constant instead of duplicating this literal " WHERE" 3 times.(‡ãíÏ8†¦öğ”-
-psquid:S1192Á"QDefine a constant instead of duplicating this literal "SELECT 0 AS `id`" 3 times.(Æ¬íÿ8˜–ûâ•-
-fsquid:S1192Ğ"GDefine a constant instead of duplicating this literal " FROM " 3 times.(ç†ûŒ8šĞšÜ•-
+msquid:S1192t"ODefine a constant instead of duplicating this literal "SELECT * FROM " 4 times.(¤ÑšÍ8šĞšÜ•-
+psquid:S1192·"QDefine a constant instead of duplicating this literal "SELECT 0 AS `id`" 3 times.(Æ¬íÿ8˜–ûâ•-
+esquid:S1192u"GDefine a constant instead of duplicating this literal " WHERE" 3 times.(‡ãíÏ8†¦öğ”-
+fsquid:S1192Æ"GDefine a constant instead of duplicating this literal " FROM " 3 times.(ç†ûŒ8šĞšÜ•-

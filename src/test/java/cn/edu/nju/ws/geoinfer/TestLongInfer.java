@@ -1,6 +1,6 @@
 package cn.edu.nju.ws.geoinfer;
 
-import cn.edu.nju.ws.geoinfer.sql.SqlStorageEngine;
+import cn.edu.nju.ws.geoinfer.testutils.TestUtils;
 import cn.edu.nju.ws.geoinfer.utils.SimpleInferer;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,11 +14,8 @@ public class TestLongInfer {
 
   @Test
   public void testLongInfer() {
-    SqlStorageEngine.getInstance().initialize("jdbc:mysql://localhost:3306/", "root", "", false);
-    SqlStorageEngine.getInstance().executeSql(String.format("DROP DATABASE IF EXISTS `%s`", DB));
-    SqlStorageEngine.getInstance().executeSql(String.format("CREATE DATABASE `%s`", DB));
-    SqlStorageEngine.getInstance().executeSql(String.format("USE `%s`", DB));
-    SqlStorageEngine.getInstance().bootstrap();
+    TestUtils.bootstrapDatabase(DB);
+
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < 1000; i++) {
       sb.append(String.format("test_%d(X) :- test_%d(X).\n", i + 1, i));
@@ -28,6 +25,7 @@ public class TestLongInfer {
     String rule = sb.toString();
     List<List<String>> result = SimpleInferer.infer(rule, "longinfer");
     Assert.assertEquals(Collections.singletonList(Collections.singletonList("excited")), result);
-    SqlStorageEngine.getInstance().executeSql(String.format("DROP DATABASE `%s`", DB));
+
+    TestUtils.finalizeDatabase(DB);
   }
 }

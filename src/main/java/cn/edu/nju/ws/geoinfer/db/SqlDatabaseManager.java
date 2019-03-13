@@ -300,10 +300,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
 
   @Override
   public TablePointerPair getTablePointer(SqlDatabaseTable table) {
-    if (!(table instanceof SqlDatabaseRefTable)) {
-      throw new IllegalArgumentException();
-    }
-    String tableName = ((SqlDatabaseRefTable) table).getName();
+    String tableName = getRefTableName(table);
 
     Connection connection = SqlStorageEngine.getInstance().getConnection();
 
@@ -327,10 +324,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
 
   @Override
   public int getTableTailPointer(SqlDatabaseTable table) {
-    if (!(table instanceof SqlDatabaseRefTable)) {
-      throw new IllegalArgumentException();
-    }
-    String tableName = ((SqlDatabaseRefTable) table).getName();
+    String tableName = getRefTableName(table);
     Connection connection = SqlStorageEngine.getInstance().getConnection();
     String sql = "SELECT MAX(id) AS tail FROM `" + tableName + "`";
     LOG.debug(sql);
@@ -343,12 +337,36 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     }
   }
 
-  @Override
-  public void setTablePointer(SqlDatabaseTable table, TablePointerPair newTablePointer) {
+  private String getRefTableName(SqlDatabaseTable table) {
     if (!(table instanceof SqlDatabaseRefTable)) {
       throw new IllegalArgumentException();
     }
-    String tableName = ((SqlDatabaseRefTable) table).getName();
+    return ((SqlDatabaseRefTable) table).getName();
+  }
+
+  @Override
+  public int getTableSize(SqlDatabaseTable table) {
+    String tableName = getRefTableName(table);
+    return getTableSize(tableName);
+  }
+
+  @Override
+  public int getTableSize(String tableName) {
+    Connection connection = SqlStorageEngine.getInstance().getConnection();
+    String sql = "SELECT COUNT(id) AS size FROM `" + tableName + "`";
+    LOG.debug(sql);
+
+    try (ResultSet resultSet = connection.createStatement().executeQuery(sql)) {
+      if (!resultSet.next()) return 0;
+      return resultSet.getInt("size");
+    } catch (SQLException cause) {
+      throw new IllegalStateException("", cause);
+    }
+  }
+
+  @Override
+  public void setTablePointer(SqlDatabaseTable table, TablePointerPair newTablePointer) {
+    String tableName = getRefTableName(table);
 
     int last = newTablePointer.getLastPointer();
     int current = newTablePointer.getCurrentPointer();

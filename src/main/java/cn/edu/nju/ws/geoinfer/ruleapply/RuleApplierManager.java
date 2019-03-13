@@ -35,7 +35,6 @@ public class RuleApplierManager<T extends DatabaseTable> {
     }
 
     for (Atom atom : rule.getBody()) {
-      String tableName = atom.getPredicate().getTableName();
       T atomTable = null;
 
       // Step 0: builtin
@@ -46,7 +45,7 @@ public class RuleApplierManager<T extends DatabaseTable> {
             BuiltinRegistry.getInstance().call(predicate.getName(), dbm.getData(selectedTable));
         atomTable = dbm.putData(transformedData, BuiltinRegistry.getInstance().getArity(predicate.getName()), null);
       } else {
-        atomTable = dbm.getTable(tableName);
+        atomTable = dbm.getTable(atom.getPredicate().getTableName());
       }
 
       // Step 1: filter

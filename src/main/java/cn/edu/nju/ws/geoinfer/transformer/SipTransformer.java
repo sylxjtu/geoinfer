@@ -1,6 +1,7 @@
 package cn.edu.nju.ws.geoinfer.transformer;
 
 import cn.edu.nju.ws.geoinfer.data.program.*;
+import cn.edu.nju.ws.geoinfer.db.DatabaseManager;
 import cn.edu.nju.ws.geoinfer.sip.SipStrategy;
 import cn.edu.nju.ws.geoinfer.utils.Utils;
 
@@ -17,6 +18,13 @@ public class SipTransformer implements Transformer {
 
   private Map<Predicate, List<Rule>> headPredicateRuleListMap;
   private Set<Predicate> derivedPredicateSet;
+
+  private DatabaseManager<?> dbm;
+
+  public SipTransformer(DatabaseManager<?> dbm) {
+    this();
+    this.dbm = dbm;
+  }
 
   public SipTransformer() {
     predicateMap = new HashMap<>();
@@ -93,6 +101,10 @@ public class SipTransformer implements Transformer {
    * @return adorned goal predicate
    */
   private Atom getNewGoal(Atom goal) {
+    // Goal must be raw predicate
+    if (!(goal.getPredicate() instanceof RawPredicate)) {
+      throw new IllegalArgumentException();
+    }
     // Add goal predicate
     String adorn = extractAdornFromAtom(goal);
     AdornPredicate adornGoalPredicate = new AdornPredicate(goal.getPredicate(), adorn);
@@ -210,7 +222,8 @@ public class SipTransformer implements Transformer {
               || atom.getPredicate() instanceof ForceSipPredicate);
 
       if (shouldForceSip) return candidate == null ? atomIndex : candidateIndex;
-      if (candidate == null || SipStrategy.compare(candidate, atom, boundVariables, derivedPredicateSet) > 0) {
+      if (candidate == null
+          || SipStrategy.compare(candidate, atom, boundVariables, derivedPredicateSet, dbm) > 0) {
         candidateIndex = atomIndex;
       }
     }

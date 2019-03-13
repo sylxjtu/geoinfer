@@ -3,6 +3,7 @@ package cn.edu.nju.ws.geoinfer.sip;
 import cn.edu.nju.ws.geoinfer.data.program.Atom;
 import cn.edu.nju.ws.geoinfer.data.program.Predicate;
 import cn.edu.nju.ws.geoinfer.data.program.Term;
+import cn.edu.nju.ws.geoinfer.db.DatabaseManager;
 import cn.edu.nju.ws.geoinfer.utils.Utils;
 
 import java.util.Set;
@@ -14,13 +15,17 @@ public class SipStrategy {
   /**
    * Compare which atom will be calculated first
    *
-   * @param lhs            left-hand atom
-   * @param rhs            right-hand atom
+   * @param lhs left-hand atom
+   * @param rhs right-hand atom
    * @param boundVariables the set of variables that are already bound
    * @return -1 represents lhs is better, 1 represents rhs is better, 0 represents equal
    */
   public static int compare(
-      Atom lhs, Atom rhs, Set<String> boundVariables, Set<Predicate> derivedPredicateSet) {
+      Atom lhs,
+      Atom rhs,
+      Set<String> boundVariables,
+      Set<Predicate> derivedPredicateSet,
+      DatabaseManager<?> dbm) {
     // First check idb or edb
     if (derivedPredicateSet.contains(lhs.getPredicate())) {
       if (derivedPredicateSet.contains(rhs.getPredicate())) {
@@ -31,7 +36,7 @@ public class SipStrategy {
     } else if (derivedPredicateSet.contains(rhs.getPredicate())) {
       return -1;
     } else {
-      return compareBothInternal(lhs, rhs, boundVariables);
+      return compareBothInternal(lhs, rhs, boundVariables, dbm);
     }
   }
 
@@ -39,8 +44,7 @@ public class SipStrategy {
     int boundCount = 0;
     for (Term term : atom.getTerms()) {
       boundCount +=
-          Utils.<Integer>termMap(
-              term, constant -> 1, variable -> boundVariables.contains(variable) ? 1 : 0);
+          Utils.termMap(term, constant -> 1, variable -> boundVariables.contains(variable) ? 1 : 0);
     }
     return boundCount;
   }
@@ -53,8 +57,15 @@ public class SipStrategy {
     return Integer.compare(boundCountRight, boundCountLeft);
   }
 
-  private static int compareBothInternal(Atom lhs, Atom rhs, Set<String> boundVariables) {
-    // TODO: add pre query filter
-    return 0;
+  private static int compareBothInternal(
+      Atom lhs, Atom rhs, Set<String> boundVariables, DatabaseManager<?> dbm) {
+    // TODO use bound variables to further optimize
+    if (dbm == null) {
+      return 0;
+    } else {
+      return Integer.compare(
+          dbm.getTableSize(lhs.getPredicate().getTableName()),
+          dbm.getTableSize(rhs.getPredicate().getTableName()));
+    }
   }
 }

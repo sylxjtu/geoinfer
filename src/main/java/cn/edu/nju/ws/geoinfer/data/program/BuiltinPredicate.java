@@ -42,6 +42,6 @@ public class BuiltinPredicate extends Predicate {
    */
   @Override
   public String getTableName() {
-    return null;
+    throw new UnsupportedOperationException();
   }
 }
