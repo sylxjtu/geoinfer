@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b1fdf36-2be4-484c-9327-7e4a68937f4e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/seminaive/TablePointerRegistry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/DatabaseManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplierManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplierManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/testutils/TestUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/testutils/TestUtils.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -135,31 +127,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplierManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="95" selection-start-line="95" selection-end-line="95" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/util/ArrayList.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="192">
               <caret line="428" selection-start-line="428" selection-end-line="428" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestGeoNamesMediumForceSip.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="24" selection-start-line="24" selection-end-line="24" />
             </state>
           </provider>
         </entry>
@@ -198,12 +169,38 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/DatabaseManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="40" selection-start-line="40" selection-end-line="40" />
+            <state relative-caret-position="149">
+              <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="43" column="72" lean-forward="true" selection-start-line="43" selection-start-column="72" selection-end-line="43" selection-end-column="72" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="186" column="25" lean-forward="true" selection-start-line="186" selection-start-column="25" selection-end-line="186" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#11672#11673#0" expanded="true" />
+                <element signature="e#11705#11706#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -218,11 +215,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestManyRecursive.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-13">
-              <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+            <state relative-caret-position="127">
+              <caret line="23" column="45" lean-forward="true" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -231,7 +228,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/seminaive/TablePointerRegistry.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="42">
-              <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+              <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#315#316#0" expanded="true" />
@@ -257,7 +254,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getData</find>
       <find>:</find>
       <find>ADHOC</find>
       <find>delta_bff</find>
@@ -287,6 +283,7 @@
       <find>index</find>
       <find>createIndexes</find>
       <find>getTableColum</find>
+      <find>union</find>
     </findStrings>
     <replaceStrings>
       <replace>LOG.debug</replace>
@@ -346,13 +343,13 @@
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseRefTable.java" />
         <option value="$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestManyRecursive.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/DatabaseManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/main/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplierManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/ruleapply/RuleApplier.java" />
         <option value="$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/testutils/TestUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/seminaive/TablePointerRegistry.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java" />
       </list>
     </option>
   </component>
@@ -794,7 +791,7 @@
       <workItem from="1552132136760" duration="4793000" />
       <workItem from="1552272059719" duration="34344000" />
       <workItem from="1552445713281" duration="20391000" />
-      <workItem from="1552480840572" duration="4698000" />
+      <workItem from="1552480840572" duration="5042000" />
     </task>
     <task id="LOCAL-00001" summary="first editon">
       <created>1551937966785</created>
@@ -859,13 +856,17 @@
       <option name="project" value="LOCAL" />
       <updated>1552483043955</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="cache table pointer">
+      <created>1552485616374</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1552485616374</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestManyRecursive_testManyRecursive - 2019.03.13 at 21h 03m 30s.xml">
-      <configuration name="TestManyRecursive.testManyRecursive" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="cn_edu_nju_ws_geoinfer_in_geoinfer_test - 2019.03.13 at 21h 05m 02s.xml">
       <configuration name="cn.edu.nju.ws.geoinfer in geoinfer_test" configurationId="JUnit" />
     </history-entry>
@@ -893,9 +894,12 @@
     <history-entry file="cn_edu_nju_ws_geoinfer_in_geoinfer_test - 2019.03.13 at 21h 48m 19s.xml">
       <configuration name="cn.edu.nju.ws.geoinfer in geoinfer_test" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="cn_edu_nju_ws_geoinfer_in_geoinfer_test - 2019.03.13 at 22h 03m 10s.xml">
+      <configuration name="cn.edu.nju.ws.geoinfer in geoinfer_test" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="207851000" />
+    <option name="totallyTimeSpent" value="208195000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -913,9 +917,9 @@
       <window_info id="UI Designer" order="0" />
       <window_info id="Favorites" order="1" sideWeight="0.502" side_tool="true" weight="0.24540311" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="3" sideWeight="0.498" visible="true" weight="0.24540311" />
+      <window_info content_ui="combo" id="Project" order="3" sideWeight="0.498" visible="true" weight="0.24540311" />
       <window_info id="Structure" order="4" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Run with VisualVM" visible="true" weight="0.3297587" />
+      <window_info anchor="bottom" id="Run with VisualVM" weight="0.3297587" />
       <window_info anchor="bottom" id="Debug with VisualVM" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.3297587" />
       <window_info anchor="bottom" id="TODO" order="1" weight="0.3297587" />
@@ -931,18 +935,18 @@
       <window_info anchor="bottom" id="Build" order="11" weight="0.32931727" />
       <window_info anchor="bottom" id="Message" order="12" />
       <window_info anchor="bottom" id="Find" order="13" weight="0.32841823" />
-      <window_info anchor="bottom" id="Run" order="14" sideWeight="0.4992928" weight="0.3297587" />
+      <window_info active="true" anchor="bottom" id="Run" order="14" sideWeight="0.4992928" visible="true" weight="0.3297587" />
       <window_info anchor="bottom" id="Debug" order="15" weight="0.39812332" />
       <window_info anchor="bottom" id="Cvs" order="16" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="17" weight="0.4" />
       <window_info anchor="bottom" id="Docker" order="18" show_stripe_button="false" />
       <window_info anchor="right" id="Maven Projects" order="0" weight="0.32956153" />
       <window_info anchor="right" id="Gradle" order="1" weight="0.32956153" />
-      <window_info anchor="right" id="Database" order="2" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Palette" order="4" />
-      <window_info anchor="right" id="Commander" order="5" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
+      <window_info anchor="right" id="Palette&#9;" order="2" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Commander" order="4" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
+      <window_info anchor="right" id="Database" order="6" weight="0.32956153" />
       <window_info anchor="right" id="Ant Build" order="7" weight="0.2496464" />
       <window_info anchor="right" id="Maven" order="8" />
       <window_info anchor="right" id="Coverage" order="9" side_tool="true" weight="0.32956153" />
@@ -998,7 +1002,8 @@
     <MESSAGE value="add test" />
     <MESSAGE value="add extract fact optimization" />
     <MESSAGE value="cache arity" />
-    <option name="LAST_COMMIT_MESSAGE" value="cache arity" />
+    <MESSAGE value="cache table pointer" />
+    <option name="LAST_COMMIT_MESSAGE" value="cache table pointer" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1324,26 +1329,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/DatabaseManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="32" column="2" selection-start-line="32" selection-start-column="2" selection-end-line="32" selection-end-column="2" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="341" column="3" selection-start-line="341" selection-start-column="3" selection-end-line="341" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/transformer/ExtractFactTransformer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1395,16 +1380,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="40" selection-start-line="40" selection-end-line="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -1415,7 +1390,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/seminaive/TablePointerRegistry.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
-          <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#315#316#0" expanded="true" />
@@ -1436,6 +1411,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestManyRecursive.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="23" column="45" lean-forward="true" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/DatabaseManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestGeoNamesMedium.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="307">
@@ -1443,10 +1435,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/cn/edu/nju/ws/geoinfer/TestManyRecursive.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13">
-          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+        <state relative-caret-position="247">
+          <caret line="43" column="72" lean-forward="true" selection-start-line="43" selection-start-column="72" selection-end-line="43" selection-end-column="72" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="186" column="25" lean-forward="true" selection-start-line="186" selection-start-column="25" selection-end-line="186" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#11672#11673#0" expanded="true" />
+            <element signature="e#11705#11706#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -342,25 +342,13 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
 
   private int getTableColumnCount(SqlDatabaseTable table) {
     return table.getArity();
-//    Connection connection = SqlStorageEngine.getInstance().getConnection();
-//
-//    try (ResultSet resultSet =
-//        connection
-//            .createStatement()
-//            .executeQuery("SELECT * FROM " + table.getFullRef() + " LIMIT 0")) {
-//      int allColumnCount = resultSet.getMetaData().getColumnCount();
-//      return NumberUtils.toInt(
-//              resultSet.getMetaData().getColumnName(allColumnCount).substring(1), -1)
-//          + 1;
-//    } catch (SQLException cause) {
-//      throw new IllegalStateException("", cause);
-//    }
   }
 
   private void executeSql(String sql) {
     SqlStorageEngine.getInstance().executeSql(sql);
   }
 
+  @Deprecated
   private void createIndexes(String tableName, int columnCount) {
     for (int i = 0; i < columnCount; i++) {
       executeSql("ALTER TABLE `" + tableName + "` ADD INDEX (`_" + i + "`);");
