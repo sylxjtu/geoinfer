@@ -38,7 +38,6 @@ public class SimpleInferer {
             new ExtractFactTransformer(dbm), new SipTransformer(dbm), new SupMagicTransformer());
     InferEngine engine = new BasicInferEngine(transformer, new SemiNaiveSolver());
     engine.initialize(program);
-    dbm.initializeTablePointer();
     SqlDatabaseTable table = engine.solve(dbm);
 
     long te = System.nanoTime();

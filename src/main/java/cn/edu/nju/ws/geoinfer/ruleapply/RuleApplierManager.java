@@ -7,6 +7,7 @@ import cn.edu.nju.ws.geoinfer.data.program.*;
 import cn.edu.nju.ws.geoinfer.data.rarule.*;
 import cn.edu.nju.ws.geoinfer.db.DatabaseManager;
 import cn.edu.nju.ws.geoinfer.db.DatabaseTable;
+import cn.edu.nju.ws.geoinfer.seminaive.TablePointerRegistry;
 import cn.edu.nju.ws.geoinfer.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,8 @@ import java.util.List;
 public class RuleApplierManager<T extends DatabaseTable> {
   private static final String NON_VARIABLE_FIELD = "*";
   private static final Logger LOG = LoggerFactory.getLogger(RuleApplierManager.class);
+
+  private TablePointerRegistry tablePointerRegistry = TablePointerRegistry.getInstance();
 
   void applyRule(Rule rule, DatabaseManager<T> dbm) {
     LOG.debug("Applying {}", rule);
@@ -87,13 +90,12 @@ public class RuleApplierManager<T extends DatabaseTable> {
     String tableName = predicate.getTableName();
     if (tableName == null) return false;
     // We don't care about this table's arity
-    // TODO: don't use table, use raw string!
     T table = dbm.getTableWithProvidedArity(tableName, -1);
-    TablePointerPair pointerPair = dbm.getTablePointer(table);
+    TablePointerPair pointerPair = tablePointerRegistry.getTablePointer(tableName);
     int tailPointer = dbm.getTableTailPointer(table);
     TablePointerPair newPointerPair =
         new TablePointerPair(pointerPair.getCurrentPointer(), tailPointer);
-    dbm.setTablePointer(table, newPointerPair);
+    tablePointerRegistry.setTablePointer(tableName, newPointerPair);
     LOG.debug("Table {} current pointer {} update to {}", predicate.getTableName(), pointerPair.getCurrentPointer(), tailPointer);
     return pointerPair.getCurrentPointer() != tailPointer;
   }
@@ -138,14 +140,14 @@ public class RuleApplierManager<T extends DatabaseTable> {
       }
     }
     if (atom.getPredicate() instanceof DeltaOldPredicate) {
-      TablePointerPair pointerPair = dbm.getTablePointer(atomTable);
+      TablePointerPair pointerPair = tablePointerRegistry.getTablePointer(atom.getPredicate().getTableName());
       return dbm.filterWithPointer(
           atomTable,
           filterRules,
           pointerPair.getLastPointer() + 1,
           pointerPair.getCurrentPointer());
     } else if (atom.getPredicate() instanceof OldPredicate) {
-      TablePointerPair pointerPair = dbm.getTablePointer(atomTable);
+      TablePointerPair pointerPair = tablePointerRegistry.getTablePointer(atom.getPredicate().getTableName());
       return dbm.filterWithPointer(atomTable, filterRules, 0, pointerPair.getLastPointer());
     }
     return dbm.filter(atomTable, filterRules);

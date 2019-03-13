@@ -1,6 +1,5 @@
 package cn.edu.nju.ws.geoinfer.db;
 
-import cn.edu.nju.ws.geoinfer.data.miscellaneous.TablePointerPair;
 import cn.edu.nju.ws.geoinfer.data.rarule.*;
 import cn.edu.nju.ws.geoinfer.sql.SqlStorageEngine;
 import com.google.common.collect.Lists;
@@ -300,30 +299,6 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   }
 
   @Override
-  public TablePointerPair getTablePointer(SqlDatabaseTable table) {
-    String tableName = getRefTableName(table);
-
-    Connection connection = SqlStorageEngine.getInstance().getConnection();
-
-    try (ResultSet resultSet =
-             connection
-                 .createStatement()
-                 .executeQuery(
-                     "SELECT last, current FROM `_table_pointer` WHERE `table_name`='"
-                         + tableName
-                         + "';")) {
-      // Has any result
-      if (!resultSet.next()) {
-        return new TablePointerPair(0, 0);
-      } else {
-        return new TablePointerPair(resultSet.getInt("last"), resultSet.getInt("current"));
-      }
-    } catch (SQLException cause) {
-      throw new IllegalStateException("", cause);
-    }
-  }
-
-  @Override
   public int getTableTailPointer(SqlDatabaseTable table) {
     String tableName = getRefTableName(table);
     Connection connection = SqlStorageEngine.getInstance().getConnection();
@@ -363,32 +338,6 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     } catch (SQLException cause) {
       throw new IllegalStateException("", cause);
     }
-  }
-
-  @Override
-  public void setTablePointer(SqlDatabaseTable table, TablePointerPair newTablePointer) {
-    String tableName = getRefTableName(table);
-
-    int last = newTablePointer.getLastPointer();
-    int current = newTablePointer.getCurrentPointer();
-    String sql =
-        "INSERT INTO `_table_pointer` (`table_name`, `last`, `current`) VALUES ('"
-            + tableName
-            + "', "
-            + last
-            + ", "
-            + current
-            + ") ON DUPLICATE KEY UPDATE last="
-            + last
-            + ", current="
-            + current
-            + ";";
-    executeSql(sql);
-  }
-
-  @Override
-  public void initializeTablePointer() {
-    executeSql("TRUNCATE `_table_pointer`");
   }
 
   private int getTableColumnCount(SqlDatabaseTable table) {

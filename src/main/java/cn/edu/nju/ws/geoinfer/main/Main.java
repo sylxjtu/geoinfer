@@ -53,7 +53,6 @@ public class Main {
           TransformerCombinator.combineTransformer(new ExtractFactTransformer(dbm), new SipTransformer(dbm), new SupMagicTransformer());
       InferEngine engine = new BasicInferEngine(transformer, new SemiNaiveSolver());
       engine.initialize(program);
-      dbm.initializeTablePointer();
       SqlDatabaseTable table = engine.solve(dbm);
       List<List<String>> data = dbm.getData(table);
       StringBuilder dataStr = new StringBuilder();

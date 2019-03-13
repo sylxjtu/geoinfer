@@ -1,6 +1,7 @@
 package cn.edu.nju.ws.geoinfer.testutils;
 
 import cn.edu.nju.ws.geoinfer.db.SqlDatabaseManager;
+import cn.edu.nju.ws.geoinfer.seminaive.TablePointerRegistry;
 import cn.edu.nju.ws.geoinfer.sql.SqlStorageEngine;
 import com.google.common.collect.Streams;
 import org.apache.commons.csv.CSVFormat;
@@ -32,6 +33,7 @@ public class TestUtils {
     SqlStorageEngine.getInstance().executeSql(String.format("CREATE DATABASE `%s`", dbName));
     SqlStorageEngine.getInstance().executeSql(String.format("USE `%s`", dbName));
     SqlStorageEngine.getInstance().bootstrap();
+    TablePointerRegistry.getInstance().initialize();
   }
 
   public static void finalizeDatabase(String dbName) {

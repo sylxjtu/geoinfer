@@ -1,6 +1,5 @@
 package cn.edu.nju.ws.geoinfer.db;
 
-import cn.edu.nju.ws.geoinfer.data.miscellaneous.TablePointerPair;
 import cn.edu.nju.ws.geoinfer.data.rarule.FilterRule;
 import cn.edu.nju.ws.geoinfer.data.rarule.JoinRule;
 import cn.edu.nju.ws.geoinfer.data.rarule.SelectionRule;
@@ -31,15 +30,9 @@ public interface DatabaseManager<T extends DatabaseTable> {
 
   T join(T leftTable, T rightTable, List<JoinRule> joinRules);
 
-  TablePointerPair getTablePointer(T table);
-
   int getTableTailPointer(T table);
 
   int getTableSize(T table);
 
   int getTableSize(String tableName);
-
-  void setTablePointer(T table, TablePointerPair newTablePointer);
-
-  void initializeTablePointer();
 }
