@@ -2,9 +2,11 @@ package cn.edu.nju.ws.geoinfer.db;
 
 public class SqlDatabaseQueryTable extends SqlDatabaseTable {
   private String query;
+  private int arity;
 
-  public SqlDatabaseQueryTable(String query) {
+  public SqlDatabaseQueryTable(String query, int arity) {
     this.query = query;
+    this.arity = arity;
   }
 
   public String getQuery() {
@@ -16,6 +18,11 @@ public class SqlDatabaseQueryTable extends SqlDatabaseTable {
   }
 
   @Override
+  public int getArity() {
+    return arity;
+  }
+
+  @Override
   public String getRef() {
     return "(" + query + ")";
   }
@@ -23,5 +30,9 @@ public class SqlDatabaseQueryTable extends SqlDatabaseTable {
   @Override
   public String getFullRef() {
     return "(" + query + ") AS T";
+  }
+
+  public void setArity(int arity) {
+    this.arity = arity;
   }
 }

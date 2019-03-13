@@ -129,8 +129,6 @@ r
 Bsrc/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseQueryTable.java,9\b\9b8fd3a36f3fef071a408a1bab6dbda7ff062848
 p
 @src/main/java/cn/edu/nju/ws/geoinfer/db/SqlDatabaseRefTable.java,9\7\973a882f68719a583cf4d8f8feb6eaa0c2c2be18
-g
-7src/test/java/cn/edu/nju/ws/geoinfer/TestLongInfer.java,c\7\c7c3e7b51a6ec66c831c93e9ec09d917a0f859b6
 s
 Csrc/main/java/cn/edu/nju/ws/geoinfer/transformer/IdTransformer.java,1\0\102ed0a6f87a42f01c2e2f4a47aacfe17619c160
 m
@@ -160,3 +158,9 @@ m
 =src/main/java/cn/edu/nju/ws/geoinfer/utils/SimpleInferer.java,e\d\ed979fd6b37265925e5812974c26bb6f56e46c38
 i
 9src/main/java/cn/edu/nju/ws/geoinfer/sip/SipStrategy.java,6\6\66a5e1ea6a708e8e4084394a211f32ebd18a9cdf
+|
+Lsrc/main/java/cn/edu/nju/ws/geoinfer/transformer/ExtractFactTransformer.java,a\6\a686d08ed4f971c5589f01a102c47c90c34b0ede
+k
+;src/test/java/cn/edu/nju/ws/geoinfer/TestManyPredicate.java,c\3\c37e4d8e05cbe1ecbfc0550178902766e2896788
+k
+;src/test/java/cn/edu/nju/ws/geoinfer/TestManyRecursive.java,8\0\809b6008b497bedc6be30453351a45bebf7a9091

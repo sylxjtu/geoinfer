@@ -6,8 +6,12 @@ import cn.edu.nju.ws.geoinfer.db.DatabaseManager;
 import cn.edu.nju.ws.geoinfer.db.DatabaseTable;
 import cn.edu.nju.ws.geoinfer.solver.Solver;
 import cn.edu.nju.ws.geoinfer.transformer.Transformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BasicInferEngine implements InferEngine {
+  private static Logger LOG = LoggerFactory.getLogger(BasicInferEngine.class);
+
   private Transformer transformer;
   private Solver solver;
   private Program program;
@@ -24,6 +28,7 @@ public class BasicInferEngine implements InferEngine {
     } else {
       this.program = program;
     }
+    LOG.info("Transformed program\n{}", this.program);
   }
 
   @Override

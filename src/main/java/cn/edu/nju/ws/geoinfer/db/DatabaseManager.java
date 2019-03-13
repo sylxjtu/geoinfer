@@ -11,7 +11,7 @@ import java.util.List;
 public interface DatabaseManager<T extends DatabaseTable> {
   T createTable(String tableName, int columnCount, boolean dropExist);
 
-  T getTable(String tableName);
+  T getTableWithProvidedArity(String tableName, int arity);
 
   T insertIntoTable(T table, List<String> row);
 

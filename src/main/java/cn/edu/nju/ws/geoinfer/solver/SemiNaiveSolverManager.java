@@ -50,7 +50,7 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
       generalSemiNaiveScc(scc);
     }
 
-    return this.dbm.getTable(program.getGoal().getPredicate().getTableName());
+    return applyGoal(program.getGoal());
   }
 
   /**
@@ -199,7 +199,7 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
     }
 
     Long te = System.nanoTime();
-    LOG.info("SCC {} Elapsed {} ms", scc, (te - ts) / 1000000);
+    LOG.info("SCC {} Elapsed {} ms", scc.stream().map(id -> predicates.get(id)).toArray(), (te - ts) / 1000000);
   }
 
   /**
@@ -235,5 +235,9 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
         break;
       }
     }
+  }
+
+  private T applyGoal(Atom goal) {
+    return RuleApplier.applyGoal(goal, dbm);
   }
 }

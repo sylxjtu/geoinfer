@@ -9,11 +9,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class TestLongInfer {
-  private static final String DB = "test_long_infer_" + UUID.randomUUID().toString();
+public class TestManyPredicate {
+  private static final String DB = "test_many_predicate_" + UUID.randomUUID().toString();
 
   @Test
-  public void testLongInfer() {
+  public void testManyPredicate() {
     TestUtils.bootstrapDatabase(DB);
 
     StringBuilder sb = new StringBuilder();
@@ -23,7 +23,7 @@ public class TestLongInfer {
     sb.append("test_0(\"excited\").\n");
     sb.append("?- test_1000(X).\n");
     String rule = sb.toString();
-    List<List<String>> result = SimpleInferer.infer(rule, "longinfer");
+    List<List<String>> result = SimpleInferer.infer(rule, "many_predicate");
     Assert.assertEquals(Collections.singletonList(Collections.singletonList("excited")), result);
 
     TestUtils.finalizeDatabase(DB);

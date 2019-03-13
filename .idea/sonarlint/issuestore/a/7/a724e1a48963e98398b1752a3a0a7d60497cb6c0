@@ -1,5 +1,9 @@
 
-msquid:S1192t"ODefine a constant instead of duplicating this literal "SELECT * FROM " 4 times.(¤ÑšÍ8šĞšÜ•-
-psquid:S1192·"QDefine a constant instead of duplicating this literal "SELECT 0 AS `id`" 3 times.(Æ¬íÿ8˜–ûâ•-
-esquid:S1192u"GDefine a constant instead of duplicating this literal " WHERE" 3 times.(‡ãíÏ8†¦öğ”-
-fsquid:S1192Æ"GDefine a constant instead of duplicating this literal " FROM " 3 times.(ç†ûŒ8šĞšÜ•-
+psquid:S1192¹"QDefine a constant instead of duplicating this literal "SELECT 0 AS `id`" 3 times.(Æ¬íÿ8¢ı·—-
+qsquid:S2077é"RUse a variable binding mechanism to construct this query instead of concatenation.(«É§Ï8¢ı·—-
+dsquid:UnusedPrivateMethodŸ"2Remove this unused private "createIndexes" method.(€ŒËÆüÿÿÿÿ8Ëˆ÷·—-
+msquid:S1192v"ODefine a constant instead of duplicating this literal "SELECT * FROM " 4 times.(¤ÑšÍ8¢ı·—-
+nsquid:CommentedOutCodeLineC"<This block of commented-out lines of code should be removed.(ÖøŸüÿÿÿÿ8¢ı·—-
+esquid:S1192w"GDefine a constant instead of duplicating this literal " WHERE" 3 times.(‡ãíÏ8¢ı·—-
+fsquid:S1192È"GDefine a constant instead of duplicating this literal " FROM " 3 times.(ç†ûŒ8¢ı·—-
+isquid:CommentedOutCodeLine3"<This block of commented-out lines of code should be removed.(ì¼¶§8¢ı·—-

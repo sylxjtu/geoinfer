@@ -45,7 +45,7 @@ public class RuleApplierManager<T extends DatabaseTable> {
             BuiltinRegistry.getInstance().call(predicate.getName(), dbm.getData(selectedTable));
         atomTable = dbm.putData(transformedData, BuiltinRegistry.getInstance().getArity(predicate.getName()), null);
       } else {
-        atomTable = dbm.getTable(atom.getPredicate().getTableName());
+        atomTable = dbm.getTableWithProvidedArity(atom.getPredicate().getTableName(), atom.getTerms().size());
       }
 
       // Step 1: filter
@@ -72,6 +72,12 @@ public class RuleApplierManager<T extends DatabaseTable> {
     dbm.union(outputTable, currentTable);
   }
 
+  T applyGoal(Atom goal, DatabaseManager<T> dbm) {
+    T atomTable = dbm.getTableWithProvidedArity(goal.getPredicate().getTableName(), goal.getTerms().size());
+    List<String> atomVarFields = getAtomVarFields(goal);
+    return filterAtom(goal, atomVarFields, dbm, atomTable);
+  }
+
   /**
    * @param predicate
    * @param dbm
@@ -80,7 +86,9 @@ public class RuleApplierManager<T extends DatabaseTable> {
   boolean updatePointer(Predicate predicate, DatabaseManager<T> dbm) {
     String tableName = predicate.getTableName();
     if (tableName == null) return false;
-    T table = dbm.getTable(tableName);
+    // We don't care about this table's arity
+    // TODO: don't use table, use raw string!
+    T table = dbm.getTableWithProvidedArity(tableName, -1);
     TablePointerPair pointerPair = dbm.getTablePointer(table);
     int tailPointer = dbm.getTableTailPointer(table);
     TablePointerPair newPointerPair =

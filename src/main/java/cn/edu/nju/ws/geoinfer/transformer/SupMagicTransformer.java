@@ -31,9 +31,7 @@ public class SupMagicTransformer implements Transformer {
     return new Program(outputRules, newGoal);
   }
 
-  /**
-   * Add rules of the form sup_magic_%s_%d_%d()
-   */
+  /** Add rules of the form sup_magic_%s_%d_%d() */
   private void addSupMagicRules() {
     for (int ruleIndex = 0; ruleIndex < inputRules.size(); ruleIndex++) {
       Rule rule = inputRules.get(ruleIndex);
@@ -89,7 +87,11 @@ public class SupMagicTransformer implements Transformer {
             }
           }
         }
-        Rule newRule = new Rule(currentSupMagicAtom, Arrays.asList(lastSupMagicAtom, bodyAtom));
+        List<Atom> newBody =
+            needBound(rule.getHead())
+                ? Arrays.asList(lastSupMagicAtom, bodyAtom)
+                : Collections.singletonList(bodyAtom);
+        Rule newRule = new Rule(currentSupMagicAtom, newBody);
         outputRules.add(newRule);
 
         // Add all supmagic atoms according to this rule
@@ -125,9 +127,7 @@ public class SupMagicTransformer implements Transformer {
     return new Atom(magicPredicate, magicTerms);
   }
 
-  /**
-   * Add rules of the form magic_%s()
-   */
+  /** Add rules of the form magic_%s() */
   private void addMagicRules() {
     for (int ruleIndex = 0; ruleIndex < inputRules.size(); ruleIndex++) {
       Rule rule = inputRules.get(ruleIndex);
@@ -144,9 +144,7 @@ public class SupMagicTransformer implements Transformer {
     }
   }
 
-  /**
-   * Modify rules to include magic and supmagic atoms
-   */
+  /** Modify rules to include magic and supmagic atoms */
   private void addModifiedRules() {
     for (int ruleIndex = 0; ruleIndex < inputRules.size(); ruleIndex++) {
       Rule rule = inputRules.get(ruleIndex);

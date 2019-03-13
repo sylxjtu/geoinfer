@@ -4,7 +4,6 @@ import cn.edu.nju.ws.geoinfer.data.miscellaneous.TablePointerPair;
 import cn.edu.nju.ws.geoinfer.data.rarule.*;
 import cn.edu.nju.ws.geoinfer.sql.SqlStorageEngine;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,8 +46,8 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
       sql.setLength(0);
     }
 
-    if (!dropExist && SqlStorageEngine.getInstance().checkTableExist(tableName))
-      return new SqlDatabaseRefTable(tableName);
+    // Ignored check because only one statement is executed
+    // if (!dropExist && SqlStorageEngine.getInstance().checkTableExist(tableName))
 
     sql.append("CREATE TABLE");
     if (!dropExist) {
@@ -58,18 +57,20 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     sql.append(" ( `id` INT NOT NULL AUTO_INCREMENT, `uniq` CHAR(32) NOT NULL UNIQUE,");
     for (int i = 0; i < columnCount; i++) {
       sql.append(" `_").append(i).append("` VARCHAR(32) NULL,");
+      sql.append("INDEX (`_").append(i).append("`),");
     }
     sql.append(" PRIMARY KEY (`id`)) ENGINE = MEMORY;");
     executeSql(sql.toString());
 
-    createIndexes(tableName, columnCount);
+    // Ignore this, we use create clause to create index
+    // createIndexes(tableName, columnCount);
 
-    return new SqlDatabaseRefTable(tableName);
+    return new SqlDatabaseRefTable(tableName, columnCount);
   }
 
   @Override
-  public SqlDatabaseTable getTable(String tableName) {
-    return new SqlDatabaseRefTable(tableName);
+  public SqlDatabaseTable getTableWithProvidedArity(String tableName, int arity) {
+    return new SqlDatabaseRefTable(tableName, arity);
   }
 
   /**
@@ -133,7 +134,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
       }
     }
 
-    return new SqlDatabaseQueryTable(sql.toString());
+    return new SqlDatabaseQueryTable(sql.toString(), table.getArity());
   }
 
   @Override
@@ -161,7 +162,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     sql.append(" `id` BETWEEN ").append(start).append(" AND ").append(end);
     executeSql(sql.toString());
 
-    return new SqlDatabaseQueryTable(sql.toString());
+    return new SqlDatabaseQueryTable(sql.toString(), table.getArity());
   }
 
   /**
@@ -197,7 +198,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
       }
       sql.append(" FROM ").append(table.getFullRef());
     }
-    return new SqlDatabaseQueryTable(sql.toString());
+    return new SqlDatabaseQueryTable(sql.toString(), selectionRules.size());
   }
 
   @Override
@@ -295,7 +296,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
         if (i != joinRules.size() - 1) sql.append(" AND");
       }
     }
-    return new SqlDatabaseQueryTable(sql.toString());
+    return new SqlDatabaseQueryTable(sql.toString(), leftColumnCount + rightColumnCount);
   }
 
   @Override
@@ -391,19 +392,20 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   }
 
   private int getTableColumnCount(SqlDatabaseTable table) {
-    Connection connection = SqlStorageEngine.getInstance().getConnection();
-
-    try (ResultSet resultSet =
-             connection
-                 .createStatement()
-                 .executeQuery("SELECT * FROM " + table.getFullRef() + " LIMIT 0")) {
-      int allColumnCount = resultSet.getMetaData().getColumnCount();
-      return NumberUtils.toInt(
-          resultSet.getMetaData().getColumnName(allColumnCount).substring(1), -1)
-          + 1;
-    } catch (SQLException cause) {
-      throw new IllegalStateException("", cause);
-    }
+    return table.getArity();
+//    Connection connection = SqlStorageEngine.getInstance().getConnection();
+//
+//    try (ResultSet resultSet =
+//        connection
+//            .createStatement()
+//            .executeQuery("SELECT * FROM " + table.getFullRef() + " LIMIT 0")) {
+//      int allColumnCount = resultSet.getMetaData().getColumnCount();
+//      return NumberUtils.toInt(
+//              resultSet.getMetaData().getColumnName(allColumnCount).substring(1), -1)
+//          + 1;
+//    } catch (SQLException cause) {
+//      throw new IllegalStateException("", cause);
+//    }
   }
 
   private void executeSql(String sql) {

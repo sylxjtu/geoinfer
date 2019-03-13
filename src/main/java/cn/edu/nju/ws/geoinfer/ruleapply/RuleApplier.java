@@ -1,5 +1,6 @@
 package cn.edu.nju.ws.geoinfer.ruleapply;
 
+import cn.edu.nju.ws.geoinfer.data.program.Atom;
 import cn.edu.nju.ws.geoinfer.data.program.Predicate;
 import cn.edu.nju.ws.geoinfer.data.program.Rule;
 import cn.edu.nju.ws.geoinfer.db.DatabaseManager;
@@ -13,10 +14,16 @@ public class RuleApplier {
     new RuleApplierManager<T>().applyRule(rule, dbm);
   }
 
+  public static <T extends DatabaseTable> T applyGoal(Atom goal, DatabaseManager<T> dbm) {
+    return new RuleApplierManager<T>().applyGoal(goal, dbm);
+  }
+
   /**
+   * Update semi-naive pointer
+   *
    * @param predicate
    * @param dbm
-   * @param <T>       Database table type
+   * @param <T> Database table type
    * @return if semi naive need to continue
    */
   public static <T extends DatabaseTable> boolean updatePointer(
