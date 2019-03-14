@@ -2,7 +2,6 @@ package cn.edu.nju.ws.geoinfer.db;
 
 import cn.edu.nju.ws.geoinfer.data.rarule.*;
 import cn.edu.nju.ws.geoinfer.lowlevelstorage.builtindb.IndexedTable;
-import cn.edu.nju.ws.geoinfer.lowlevelstorage.builtindb.SimpleTable;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class BuiltinDatabaseManager implements DatabaseManager<BuiltinDatabaseTa
   @Override
   public BuiltinDatabaseTable select(
       BuiltinDatabaseTable table, List<SelectionRule> selectionRules) {
-    return new SimpleTable(doSelect(table.getData(), selectionRules));
+    return new IndexedTable(doSelect(table.getData(), selectionRules), selectionRules.size());
   }
 
   @Override
@@ -97,7 +96,11 @@ public class BuiltinDatabaseManager implements DatabaseManager<BuiltinDatabaseTa
   @Override
   public BuiltinDatabaseTable join(
       BuiltinDatabaseTable leftTable, BuiltinDatabaseTable rightTable, List<JoinRule> joinRules) {
-    return new SimpleTable(doJoin(leftTable.getData(), rightTable.getData(), joinRules));
+    if (!(rightTable instanceof IndexedTable) || !(leftTable instanceof IndexedTable)) {
+      throw new IllegalArgumentException();
+    }
+    return new IndexedTable(
+        doIndexedJoin(leftTable.getData(), ((IndexedTable) rightTable), joinRules), ((IndexedTable) leftTable).getArity() + ((IndexedTable) rightTable).getArity());
   }
 
   @Override
@@ -147,9 +150,27 @@ public class BuiltinDatabaseManager implements DatabaseManager<BuiltinDatabaseTa
                                     joinRule ->
                                         leftRow
                                             .get(joinRule.getLeftIndex())
-                                            .equals(rightRow.get(joinRule.getRightIndex())))).map(rightRow -> concat(leftRow, rightRow)
-                )
-        )
+                                            .equals(rightRow.get(joinRule.getRightIndex()))))
+                    .map(rightRow -> concat(leftRow, rightRow)))
+        .collect(Collectors.toList());
+  }
+
+  private List<List<String>> doIndexedJoin(
+      List<List<String>> leftTable, IndexedTable rightTable, List<JoinRule> joinRules) {
+    return leftTable.stream()
+        .flatMap(
+            leftRow ->
+                rightTable
+                    .filter(
+                        joinRules.stream()
+                            .map(
+                                joinRule ->
+                                    new ConstantFilterRule(
+                                        joinRule.getRightIndex(),
+                                        leftRow.get(joinRule.getLeftIndex())))
+                            .collect(Collectors.toList()))
+                    .getData().stream()
+                    .map(rightRow -> concat(leftRow, rightRow)))
         .collect(Collectors.toList());
   }
 

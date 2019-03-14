@@ -29,7 +29,25 @@ public class IndexedTable extends BuiltinDatabaseTable {
     }
     // TODO maybe use trie here
     uniqueIndex = new HashMap<>();
-    tableData = new ArrayList<List<String>>();
+    tableData = new ArrayList<>();
+  }
+
+  public IndexedTable(List<List<String>> data) {
+    this(data.isEmpty() ? 0 : data.get(0).size());
+    for (List<String> row : data) {
+      insertRow(row);
+    }
+  }
+
+  public IndexedTable(List<List<String>> data, int arity) {
+    this(arity);
+    for (List<String> row : data) {
+      insertRow(row);
+    }
+  }
+
+  public int getArity() {
+    return dataIndex.size();
   }
 
   @Override
@@ -56,9 +74,9 @@ public class IndexedTable extends BuiltinDatabaseTable {
    * @param idEnd       Inclusive
    * @return
    */
-  public SimpleTable filterWithRange(List<FilterRule> filterRules, int idBegin, int idEnd) {
+  public IndexedTable filterWithRange(List<FilterRule> filterRules, int idBegin, int idEnd) {
     List<Integer> rowIdSet = null;
-    if (filterRules.isEmpty()) return new SimpleTable(this.getData());
+    if (filterRules.isEmpty()) return this;
     for (FilterRule rule : filterRules) {
       if (rule instanceof ConstantFilterRule) {
         int columnId = ((ConstantFilterRule) rule).getColumnId();
@@ -77,10 +95,10 @@ public class IndexedTable extends BuiltinDatabaseTable {
     for (int rowIndex : rowIdSet) {
       ret.add(tableData.get(rowIndex));
     }
-    return new SimpleTable(ret);
+    return new IndexedTable(ret, dataIndex.size());
   }
 
-  public SimpleTable filter(List<FilterRule> filterRules) {
+  public IndexedTable filter(List<FilterRule> filterRules) {
     return filterWithRange(filterRules, 0, tableData.size());
   }
 
