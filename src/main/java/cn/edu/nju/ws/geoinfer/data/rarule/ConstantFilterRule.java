@@ -3,20 +3,20 @@ package cn.edu.nju.ws.geoinfer.data.rarule;
 import java.util.Objects;
 
 public class ConstantFilterRule extends FilterRule {
-  private int rowId;
+  private int columnId;
   private String value;
 
-  public ConstantFilterRule(int rowId, String value) {
-    this.rowId = rowId;
+  public ConstantFilterRule(int columnId, String value) {
+    this.columnId = columnId;
     this.value = value;
   }
 
-  public int getRowId() {
-    return rowId;
+  public int getColumnId() {
+    return columnId;
   }
 
-  public void setRowId(int rowId) {
-    this.rowId = rowId;
+  public void setColumnId(int columnId) {
+    this.columnId = columnId;
   }
 
   public String getValue() {
@@ -32,12 +32,12 @@ public class ConstantFilterRule extends FilterRule {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ConstantFilterRule that = (ConstantFilterRule) o;
-    return rowId == that.rowId &&
+    return columnId == that.columnId &&
         Objects.equals(value, that.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(rowId, value);
+    return Objects.hash(columnId, value);
   }
 }

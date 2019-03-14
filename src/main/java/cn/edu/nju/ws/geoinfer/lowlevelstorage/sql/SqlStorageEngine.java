@@ -1,4 +1,4 @@
-package cn.edu.nju.ws.geoinfer.sql;
+package cn.edu.nju.ws.geoinfer.lowlevelstorage.sql;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

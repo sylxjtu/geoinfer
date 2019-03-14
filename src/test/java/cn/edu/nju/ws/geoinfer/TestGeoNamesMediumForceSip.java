@@ -16,7 +16,7 @@ public class TestGeoNamesMediumForceSip {
   @Test
   public void testGeoNamesMediumForceSip() {
     TestUtils.bootstrapDatabase(DB);
-    TestUtils.importGeoNames();
+    TestUtils.importGeoNamesToDatabase();
 
     String rule = Initializer.getRuleFromFile(RULE_FILE);
     Initializer.registerBuiltins();

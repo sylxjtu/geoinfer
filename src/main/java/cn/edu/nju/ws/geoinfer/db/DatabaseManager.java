@@ -18,8 +18,18 @@ public interface DatabaseManager<T extends DatabaseTable> {
 
   T filter(T table, List<FilterRule> filterRules);
 
+  /**
+   * Filter with pointer inclusive
+   *
+   * @param table
+   * @param filterRules
+   * @param start
+   * @param end
+   * @return
+   */
   T filterWithPointer(T table, List<FilterRule> filterRules, int start, int end);
 
+  // TODO: maybe remove duplicate?
   T select(T table, List<SelectionRule> selectionRules);
 
   List<List<String>> getData(T table);

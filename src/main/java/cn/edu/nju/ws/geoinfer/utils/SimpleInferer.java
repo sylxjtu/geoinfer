@@ -1,6 +1,8 @@
 package cn.edu.nju.ws.geoinfer.utils;
 
 import cn.edu.nju.ws.geoinfer.data.program.Program;
+import cn.edu.nju.ws.geoinfer.db.BuiltinDatabaseManager;
+import cn.edu.nju.ws.geoinfer.db.BuiltinDatabaseTable;
 import cn.edu.nju.ws.geoinfer.db.SqlDatabaseManager;
 import cn.edu.nju.ws.geoinfer.db.SqlDatabaseTable;
 import cn.edu.nju.ws.geoinfer.engine.BasicInferEngine;
@@ -39,6 +41,28 @@ public class SimpleInferer {
     InferEngine engine = new BasicInferEngine(transformer, new SemiNaiveSolver());
     engine.initialize(program);
     SqlDatabaseTable table = engine.solve(dbm);
+
+    long te = System.nanoTime();
+    LOG.warn("Inference of {} elapsed {} ms", tag, (te - ts) / 1000000);
+    return dbm.getData(table);
+  }
+
+  /**
+   * Do all-in-one infer, requires db initialization
+   *
+   * @param programStr the program (rules & goal) in a string
+   * @return the inferred result
+   */
+  public static List<List<String>> inferBuiltin(String programStr, String tag, BuiltinDatabaseManager dbm) {
+    long ts = System.nanoTime();
+
+    Program program = (Program) new Visitor().visit(Parser.parse(programStr).logicRules());
+    Transformer transformer =
+        TransformerCombinator.combineTransformer(
+            new ExtractFactTransformer(dbm), new SipTransformer(dbm), new SupMagicTransformer());
+    InferEngine engine = new BasicInferEngine(transformer, new SemiNaiveSolver());
+    engine.initialize(program);
+    BuiltinDatabaseTable table = engine.solve(dbm);
 
     long te = System.nanoTime();
     LOG.warn("Inference of {} elapsed {} ms", tag, (te - ts) / 1000000);

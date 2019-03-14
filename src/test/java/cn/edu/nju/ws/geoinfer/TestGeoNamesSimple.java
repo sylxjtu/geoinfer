@@ -17,7 +17,7 @@ public class TestGeoNamesSimple {
   @Test
   public void testGeoNamesSimple() {
     TestUtils.bootstrapDatabase(DB);
-    TestUtils.importGeoNames();
+    TestUtils.importGeoNamesToDatabase();
 
     String rule = Initializer.getRuleFromFile(RULE_FILE);
     Initializer.registerBuiltins();

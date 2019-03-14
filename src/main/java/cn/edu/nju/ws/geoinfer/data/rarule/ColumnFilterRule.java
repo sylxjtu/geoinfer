@@ -3,28 +3,28 @@ package cn.edu.nju.ws.geoinfer.data.rarule;
 import java.util.Objects;
 
 public class ColumnFilterRule extends FilterRule {
-  private int rowId;
-  private int anotherRowId;
+  private int columnId;
+  private int anotherColumnId;
 
-  public ColumnFilterRule(int rowId, int anotherRowId) {
-    this.rowId = rowId;
-    this.anotherRowId = anotherRowId;
+  public ColumnFilterRule(int columnId, int anotherColumnId) {
+    this.columnId = columnId;
+    this.anotherColumnId = anotherColumnId;
   }
 
-  public int getRowId() {
-    return rowId;
+  public int getColumnId() {
+    return columnId;
   }
 
-  public void setRowId(int rowId) {
-    this.rowId = rowId;
+  public void setColumnId(int columnId) {
+    this.columnId = columnId;
   }
 
-  public int getAnotherRowId() {
-    return anotherRowId;
+  public int getAnotherColumnId() {
+    return anotherColumnId;
   }
 
-  public void setAnotherRowId(int anotherRowId) {
-    this.anotherRowId = anotherRowId;
+  public void setAnotherColumnId(int anotherColumnId) {
+    this.anotherColumnId = anotherColumnId;
   }
 
   @Override
@@ -32,11 +32,11 @@ public class ColumnFilterRule extends FilterRule {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ColumnFilterRule that = (ColumnFilterRule) o;
-    return rowId == that.rowId && anotherRowId == that.anotherRowId;
+    return columnId == that.columnId && anotherColumnId == that.anotherColumnId;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(rowId, anotherRowId);
+    return Objects.hash(columnId, anotherColumnId);
   }
 }

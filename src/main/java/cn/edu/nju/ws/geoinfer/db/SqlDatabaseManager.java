@@ -1,7 +1,7 @@
 package cn.edu.nju.ws.geoinfer.db;
 
 import cn.edu.nju.ws.geoinfer.data.rarule.*;
-import cn.edu.nju.ws.geoinfer.sql.SqlStorageEngine;
+import cn.edu.nju.ws.geoinfer.lowlevelstorage.sql.SqlStorageEngine;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,11 +118,11 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     for (int i = 0; i < filterRules.size(); i++) {
       FilterRule filterRule = filterRules.get(i);
       if (filterRule instanceof ColumnFilterRule) {
-        int lhs = ((ColumnFilterRule) filterRule).getRowId();
-        int rhs = ((ColumnFilterRule) filterRule).getAnotherRowId();
+        int lhs = ((ColumnFilterRule) filterRule).getColumnId();
+        int rhs = ((ColumnFilterRule) filterRule).getAnotherColumnId();
         sql.append(" `_").append(lhs).append("`=`_").append(rhs).append("`");
       } else if (filterRule instanceof ConstantFilterRule) {
-        int rowId = ((ConstantFilterRule) filterRule).getRowId();
+        int rowId = ((ConstantFilterRule) filterRule).getColumnId();
         String value = ((ConstantFilterRule) filterRule).getValue();
         sql.append(" `_").append(rowId).append("`='").append(value).append("'");
       } else {
@@ -146,11 +146,11 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     sql.append(" WHERE");
     for (FilterRule rule : filterRules) {
       if (rule instanceof ColumnFilterRule) {
-        int lhs = ((ColumnFilterRule) rule).getRowId();
-        int rhs = ((ColumnFilterRule) rule).getAnotherRowId();
+        int lhs = ((ColumnFilterRule) rule).getColumnId();
+        int rhs = ((ColumnFilterRule) rule).getAnotherColumnId();
         sql.append(" `_").append(lhs).append("`=`_").append(rhs).append("`");
       } else if (rule instanceof ConstantFilterRule) {
-        int rowId = ((ConstantFilterRule) rule).getRowId();
+        int rowId = ((ConstantFilterRule) rule).getColumnId();
         String value = ((ConstantFilterRule) rule).getValue();
         sql.append(" `_").append(rowId).append("`='").append(value).append("'");
       } else {
@@ -359,7 +359,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     StringBuilder query = new StringBuilder();
     query.append("MD5(CONCAT(''");
     for (int i = 0; i < size; i++) {
-      query.append(", `_").append(i).append("`");
+      query.append(", CHAR(0), `_").append(i).append("`");
     }
     query.append("))");
     return query.toString();
