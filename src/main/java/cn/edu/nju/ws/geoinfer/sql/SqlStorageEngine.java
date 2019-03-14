@@ -78,13 +78,7 @@ public class SqlStorageEngine {
   }
 
   public void bootstrap() {
-    executeSql(
-        "CREATE TABLE IF NOT EXISTS `_table_pointer` (\n"
-            + "  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,\n"
-            + "  `table_name` varchar(255) NOT NULL UNIQUE,\n"
-            + "  `last` int(11) NOT NULL,\n"
-            + "  `current` int(11) NOT NULL\n"
-            + ") ENGINE=MEMORY;\n");
+    // Temporarily do nothing
   }
 
   public void addCleanTable(String tempTableName) {
