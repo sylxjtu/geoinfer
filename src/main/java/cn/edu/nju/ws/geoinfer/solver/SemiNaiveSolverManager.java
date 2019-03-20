@@ -11,12 +11,16 @@ import cn.edu.nju.ws.geoinfer.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 class SemiNaiveSolverManager<T extends DatabaseTable> {
   private static final Logger LOG = LoggerFactory.getLogger(SemiNaiveSolverManager.class);
 
   private DatabaseManager<T> dbm;
+  private Map<Predicate, Integer> predicateSet;
   private List<Predicate> predicates;
   private Map<Predicate, Integer> predicateToInt;
   private Graph predicateGraph = null;
@@ -28,6 +32,7 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
   SemiNaiveSolverManager() {
     predicates = new ArrayList<>();
     predicateToInt = new HashMap<>();
+    predicateSet = new HashMap<>();
   }
 
   /**
@@ -40,6 +45,7 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
   T solve(Program program, DatabaseManager<T> dbm) {
     this.dbm = dbm;
     collectPredicates(program);
+    createTables();
     predicateGraph = buildPredicateGraph(program);
     SccResult sccResult = GraphUtils.stronglyConnectedComponent(predicateGraph);
     sccList = getSccList(sccResult);
@@ -59,16 +65,15 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
    * @param program input program
    */
   private void collectPredicates(Program program) {
-    Set<Predicate> predicateSet = new HashSet<>();
     for (Rule rule : program.getRules()) {
-      predicateSet.add(rule.getHead().getPredicate());
+      predicateSet.computeIfAbsent(rule.getHead().getPredicate(), predicate -> rule.getHead().getTerms().size());
       for (Atom atom : rule.getBody()) {
-        predicateSet.add(atom.getPredicate());
+        predicateSet.computeIfAbsent(atom.getPredicate(), predicate -> atom.getTerms().size());
       }
     }
-    predicateSet.add(program.getGoal().getPredicate());
+    predicateSet.computeIfAbsent(program.getGoal().getPredicate(), predicate -> program.getGoal().getTerms().size());
 
-    predicates.addAll(predicateSet);
+    predicates.addAll(predicateSet.keySet());
     for (int predicateIndex = 0; predicateIndex < predicates.size(); predicateIndex++) {
       predicateToInt.put(predicates.get(predicateIndex), predicateIndex);
     }
@@ -211,9 +216,9 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
     LOG.debug("Entering clique");
     for (Rule rule : recursiveRules) {
       LOG.debug("Clique has rule {}", rule);
-      Predicate headPredicate = rule.getHead().getPredicate();
-      int arity = rule.getHead().getTerms().size();
-      dbm.createTable(headPredicate.getTableName(), arity, false);
+//      Predicate headPredicate = rule.getHead().getPredicate();
+//      int arity = rule.getHead().getTerms().size();
+//      dbm.createTable(headPredicate.getTableName(), arity, false);
     }
     while (true) {
       boolean isContinue = false;
@@ -239,5 +244,12 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
 
   private T applyGoal(Atom goal) {
     return RuleApplier.applyGoal(goal, dbm);
+  }
+
+  private void createTables() {
+    for (Map.Entry<Predicate, Integer> entry : predicateSet.entrySet()) {
+      if (entry.getKey() instanceof BuiltinPredicate) continue;
+      dbm.createTable(entry.getKey().getTableName(), entry.getValue(), false);
+    }
   }
 }

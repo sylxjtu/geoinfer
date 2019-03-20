@@ -21,21 +21,28 @@ public class Visitor extends DatalogBaseVisitor<Object> {
   }
 
   @Override
+  public String visitStringLike(DatalogParser.StringLikeContext ctx) {
+    if (ctx.Str() != null) {
+      String ret = ctx.Str().getSymbol().getText();
+      return ret.replace("\"", "");
+    } else {
+      return ctx.ID().getSymbol().getText();
+    }
+  }
+
+  @Override
   public Object visitBuiltInPredicate(DatalogParser.BuiltInPredicateContext ctx) {
-    String id = ctx.ID().getSymbol().getText();
-    return new BuiltinPredicate(id);
+    return new BuiltinPredicate(visitStringLike(ctx.stringLike()));
   }
 
   @Override
   public Object visitRawPredicate(DatalogParser.RawPredicateContext ctx) {
-    String id = ctx.ID().getSymbol().getText();
-    return new RawPredicate(id);
+    return new RawPredicate(visitStringLike(ctx.stringLike()));
   }
 
   @Override
   public Object visitForceSipPredicate(DatalogParser.ForceSipPredicateContext ctx) {
-    String id = ctx.ID().getSymbol().getText();
-    return new ForceSipPredicate(id);
+    return new ForceSipPredicate(visitStringLike(ctx.stringLike()));
   }
 
   @Override

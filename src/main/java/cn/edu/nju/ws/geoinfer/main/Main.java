@@ -27,7 +27,7 @@ public class Main {
 
     if (!compileOnly) {
       SqlStorageEngine.getInstance()
-          .initialize("jdbc:mysql://localhost:3306/geoinfer", "root", "", true);
+          .initialize("jdbc:mysql://localhost:3306/geoinfer?characterEncoding=utf8", "root", "", true);
     }
 
     String ruleStr = Initializer.getRuleFromFile("rules/geonames_medium_force_sip.txt");

@@ -48,7 +48,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     // Ignored check because only one statement is executed
     // if (!dropExist && SqlStorageEngine.getInstance().checkTableExist(tableName))
 
-    sql.append("CREATE TABLE");
+    sql.append("CREATE TEMPORARY TABLE");
     if (!dropExist) {
       sql.append(" IF NOT EXISTS");
     }
@@ -241,6 +241,8 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   public SqlDatabaseTable union(SqlDatabaseTable unionTo, SqlDatabaseTable unionFrom) {
     int columnCount = getTableColumnCount(unionTo);
 
+    int formerSize = getTableSize(unionTo);
+
     StringBuilder sql = new StringBuilder();
     sql.append("INSERT IGNORE INTO");
     sql.append(" ").append(unionTo.getFullRef());
@@ -255,6 +257,12 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     }
     sql.append(" FROM ").append(unionFrom.getFullRef()).append(";");
     executeSql(sql.toString());
+
+    int newSize = getTableSize(unionTo);
+    if (newSize != formerSize) {
+      LOG.warn("Size of {} changed by {}, by sql {}", unionTo.getRef(), newSize - formerSize, unionFrom.getRef());
+    }
+
     return unionTo;
   }
 
@@ -336,7 +344,9 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
       if (!resultSet.next()) return 0;
       return resultSet.getInt("size");
     } catch (SQLException cause) {
-      throw new IllegalStateException("", cause);
+      // TODO
+      return 0;
+      // throw new IllegalStateException("", cause);
     }
   }
 

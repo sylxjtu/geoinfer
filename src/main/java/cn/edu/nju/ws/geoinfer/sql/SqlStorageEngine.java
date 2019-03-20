@@ -60,6 +60,10 @@ public class SqlStorageEngine {
       throw new IllegalStateException("", e);
     }
 
+    executeSql("set names utf8");
+    executeSql("set character set utf8");
+    executeSql("set character_set_connection=utf8");
+
     Runtime.getRuntime()
         .addShutdownHook(
             new Thread(

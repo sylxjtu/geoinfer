@@ -28,9 +28,9 @@ public class TestUtils {
   }
 
   public static void bootstrapDatabase(String dbName) {
-    SqlStorageEngine.getInstance().initialize("jdbc:mysql://localhost:3306/", "root", "", false);
+    SqlStorageEngine.getInstance().initialize("jdbc:mysql://localhost:3306/?characterEncoding=utf8", "root", "", false);
     SqlStorageEngine.getInstance().executeSql(String.format("DROP DATABASE IF EXISTS `%s`", dbName));
-    SqlStorageEngine.getInstance().executeSql(String.format("CREATE DATABASE `%s`", dbName));
+    SqlStorageEngine.getInstance().executeSql(String.format("CREATE DATABASE `%s` character set UTF8 collate utf8_bin", dbName));
     SqlStorageEngine.getInstance().executeSql(String.format("USE `%s`", dbName));
     SqlStorageEngine.getInstance().bootstrap();
     TablePointerRegistry.getInstance().initialize();
