@@ -241,7 +241,10 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   public SqlDatabaseTable union(SqlDatabaseTable unionTo, SqlDatabaseTable unionFrom) {
     int columnCount = getTableColumnCount(unionTo);
 
-    int formerSize = getTableSize(unionTo);
+    int formerSize = 0;
+    if (LOG.isDebugEnabled()) {
+      formerSize = getTableSize(unionTo);
+    }
 
     StringBuilder sql = new StringBuilder();
     sql.append("INSERT IGNORE INTO");
@@ -258,9 +261,11 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
     sql.append(" FROM ").append(unionFrom.getFullRef()).append(";");
     executeSql(sql.toString());
 
-    int newSize = getTableSize(unionTo);
-    if (newSize != formerSize) {
-      LOG.warn("Size of {} changed by {}, by sql {}", unionTo.getRef(), newSize - formerSize, unionFrom.getRef());
+    if (LOG.isDebugEnabled()) {
+      int newSize = getTableSize(unionTo);
+      if (newSize != formerSize) {
+        LOG.debug("Size of {} changed by {}, by sql {}", unionTo.getRef(), newSize - formerSize, unionFrom.getRef());
+      }
     }
 
     return unionTo;

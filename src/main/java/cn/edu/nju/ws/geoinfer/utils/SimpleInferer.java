@@ -8,10 +8,7 @@ import cn.edu.nju.ws.geoinfer.engine.InferEngine;
 import cn.edu.nju.ws.geoinfer.parser.Parser;
 import cn.edu.nju.ws.geoinfer.parser.Visitor;
 import cn.edu.nju.ws.geoinfer.solver.SemiNaiveSolver;
-import cn.edu.nju.ws.geoinfer.transformer.ExtractFactTransformer;
-import cn.edu.nju.ws.geoinfer.transformer.SelfRecursionAvoidTransformer;
-import cn.edu.nju.ws.geoinfer.transformer.Transformer;
-import cn.edu.nju.ws.geoinfer.transformer.TransformerCombinator;
+import cn.edu.nju.ws.geoinfer.transformer.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +36,8 @@ public class SimpleInferer {
     Transformer transformer =
         TransformerCombinator.combineTransformer(
             new ExtractFactTransformer(dbm),
-            // new SipTransformer(dbm),
-            // new SupMagicTransformer(),
+            new SipTransformer(dbm),
+            new SupMagicTransformer(),
             new SelfRecursionAvoidTransformer());
     InferEngine engine = new BasicInferEngine(transformer, new SemiNaiveSolver());
     engine.initialize(program);
