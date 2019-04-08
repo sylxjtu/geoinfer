@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BasicInferEngine implements InferEngine {
-  private static Logger LOG = LoggerFactory.getLogger(BasicInferEngine.class);
+  private static final Logger LOG = LoggerFactory.getLogger(BasicInferEngine.class);
 
   private Transformer transformer;
   private Solver solver;

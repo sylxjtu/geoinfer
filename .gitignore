@@ -1,3 +1,7 @@
 .gradle/
+.idea/sonarlint
+gradle/
+gradlew
+gradlew.bat
 build/
 out/
