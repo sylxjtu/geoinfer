@@ -32,6 +32,7 @@ public class ExtractFactTransformer implements Transformer {
         rulePredicates.add(headPredicate);
       }
     }
+    rulePredicates.add(program.getGoal().getPredicate());
     List<Rule> newRules = new ArrayList<>();
     for (Rule rule : program.getRules()) {
       if (rulePredicates.contains(rule.getHead().getPredicate())) {

@@ -18,6 +18,15 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
   private static final Logger LOG = LoggerFactory.getLogger(SqlDatabaseManager.class);
   private static final int BATCH_SIZE = 1024;
 
+  private boolean useTempTable = true;
+
+  public SqlDatabaseManager() {
+  }
+
+  public SqlDatabaseManager(boolean useTempTable) {
+    this.useTempTable = useTempTable;
+  }
+
   /**
    * Create sql table
    *
@@ -45,10 +54,12 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
       sql.setLength(0);
     }
 
-    // Ignored check because only one statement is executed
-    // if (!dropExist && SqlStorageEngine.getInstance().checkTableExist(tableName))
+    // Check because temp table can have same name
+    if (!dropExist && SqlStorageEngine.getInstance().checkTableExist(tableName)) {
+      return new SqlDatabaseRefTable(tableName, columnCount);
+    }
 
-    sql.append("CREATE TEMPORARY TABLE");
+    sql.append("CREATE " + (useTempTable ? "TEMPORARY" : "") + " TABLE");
     if (!dropExist) {
       sql.append(" IF NOT EXISTS");
     }
@@ -58,7 +69,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
       sql.append(" `_").append(i).append("` VARCHAR(32) NULL,");
       sql.append("INDEX (`_").append(i).append("`),");
     }
-    sql.append(" PRIMARY KEY (`id`)) ENGINE = MEMORY;");
+    sql.append(" PRIMARY KEY (`id`)) ENGINE = " + (useTempTable ? "MEMORY" : "INNODB") + ";");
     executeSql(sql.toString());
 
     // Ignore this, we use create clause to create index
@@ -392,7 +403,6 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
 
   private String generateTempTableName() {
     String tempTableName = UUID.randomUUID().toString();
-    SqlStorageEngine.getInstance().addCleanTable(tempTableName);
     return tempTableName;
   }
 

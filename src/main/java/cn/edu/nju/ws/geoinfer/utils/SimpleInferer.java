@@ -1,5 +1,6 @@
 package cn.edu.nju.ws.geoinfer.utils;
 
+import cn.edu.nju.ws.geoinfer.backend.LogCollector;
 import cn.edu.nju.ws.geoinfer.data.program.Program;
 import cn.edu.nju.ws.geoinfer.db.SqlDatabaseManager;
 import cn.edu.nju.ws.geoinfer.db.SqlDatabaseTable;
@@ -26,6 +27,7 @@ public class SimpleInferer {
    * Do all-in-one infer, requires db initialization
    *
    * @param programStr the program (rules & goal) in a string
+   * @param tag the tag of output
    * @return the inferred result
    */
   public static List<List<String>> infer(String programStr, String tag) {
@@ -45,6 +47,9 @@ public class SimpleInferer {
 
     long te = System.nanoTime();
     LOG.warn("Inference of {} elapsed {} ms", tag, (te - ts) / 1000000);
+    if (LogCollector.getInstance().initialized()) {
+      LogCollector.getInstance().output("Elapsed " + ((te - ts) / 1000000) + "ms");
+    }
     return dbm.getData(table);
   }
 }

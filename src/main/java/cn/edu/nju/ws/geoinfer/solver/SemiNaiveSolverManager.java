@@ -3,11 +3,13 @@ package cn.edu.nju.ws.geoinfer.solver;
 import cn.edu.nju.ws.geoinfer.algorithm.graph.Graph;
 import cn.edu.nju.ws.geoinfer.algorithm.graph.GraphUtils;
 import cn.edu.nju.ws.geoinfer.algorithm.graph.SccResult;
+import cn.edu.nju.ws.geoinfer.backend.LogCollector;
 import cn.edu.nju.ws.geoinfer.data.program.*;
 import cn.edu.nju.ws.geoinfer.db.DatabaseManager;
 import cn.edu.nju.ws.geoinfer.db.DatabaseTable;
 import cn.edu.nju.ws.geoinfer.ruleapply.RuleApplier;
 import cn.edu.nju.ws.geoinfer.utils.Utils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 class SemiNaiveSolverManager<T extends DatabaseTable> {
   private static final Logger LOG = LoggerFactory.getLogger(SemiNaiveSolverManager.class);
@@ -51,6 +54,21 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
     sccList = getSccList(sccResult);
     predicateIsRecursiveMap = buildPredicateRecursiveMap();
     buildPredicateRules(program, sccResult.getBelong());
+
+    if (LogCollector.getInstance().initialized()) {
+      LogCollector.getInstance().output("SemiNaiveSolver SCCs");
+      for (List<Integer> scc : sccList) {
+        LogCollector.getInstance()
+            .output(
+                StringUtils.join(
+                    scc.stream()
+                        .map(predicates::get)
+                        .map(Predicate::getFullName)
+                        .collect(Collectors.toList()),
+                    ", "));
+      }
+      LogCollector.getInstance().output("");
+    }
 
     for (List<Integer> scc : sccList) {
       generalSemiNaiveScc(scc);

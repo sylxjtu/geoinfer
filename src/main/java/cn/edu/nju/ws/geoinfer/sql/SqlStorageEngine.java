@@ -8,18 +8,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SqlStorageEngine {
   private static final Logger LOG = LoggerFactory.getLogger(SqlStorageEngine.class);
 
   private static SqlStorageEngine ourInstance = new SqlStorageEngine();
   private Connection connection;
-  private List<String> tablesToBeCleaned;
 
   private SqlStorageEngine() {
-    tablesToBeCleaned = new ArrayList<>();
   }
 
   public static SqlStorageEngine getInstance() {
@@ -52,8 +48,11 @@ public class SqlStorageEngine {
   }
 
   public void initialize(
-      String jdbcUrl, String username, String password, boolean needToCleanTables) {
+      String jdbcUrl, String username, String password) {
     try {
+      if (connection != null) {
+        connection.close();
+      }
       connection = DriverManager.getConnection(jdbcUrl, username, password);
       connection.setAutoCommit(false);
     } catch (SQLException e) {
@@ -63,30 +62,10 @@ public class SqlStorageEngine {
     executeSql("set names utf8");
     executeSql("set character set utf8");
     executeSql("set character_set_connection=utf8");
-
-    Runtime.getRuntime()
-        .addShutdownHook(
-            new Thread(
-                () -> {
-                  if (needToCleanTables) {
-                    for (String tableName : tablesToBeCleaned) {
-                      executeSql("DROP TABLE IF EXISTS `" + tableName + "`;");
-                    }
-                  }
-                  try {
-                    connection.commit();
-                  } catch (SQLException e) {
-                    throw new IllegalStateException("", e);
-                  }
-                }));
   }
 
   public void bootstrap() {
     // Temporarily do nothing
-  }
-
-  public void addCleanTable(String tempTableName) {
-    tablesToBeCleaned.add(tempTableName);
   }
 
   public Connection getConnection() {
