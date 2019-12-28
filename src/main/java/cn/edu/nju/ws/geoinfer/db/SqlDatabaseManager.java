@@ -69,7 +69,7 @@ public class SqlDatabaseManager implements DatabaseManager<SqlDatabaseTable> {
       sql.append(" `_").append(i).append("` VARCHAR(32) NULL,");
       sql.append("INDEX (`_").append(i).append("`),");
     }
-    sql.append(" PRIMARY KEY (`id`)) ENGINE = " + (useTempTable ? "MEMORY" : "INNODB") + ";");
+    sql.append(" PRIMARY KEY (`id`)) ENGINE = " + (useTempTable ? "MEMORY" : "MEMORY") + ";");
     executeSql(sql.toString());
 
     // Ignore this, we use create clause to create index

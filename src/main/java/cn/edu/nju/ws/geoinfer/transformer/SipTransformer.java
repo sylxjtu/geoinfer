@@ -33,13 +33,19 @@ public class SipTransformer implements Transformer {
 
   @Override
   public Program transform(Program program) {
+    // 获取规则集和推理目标
     List<Rule> rules = program.getRules();
     Atom goal = program.getGoal();
 
+    // 获取导出谓词集合
     derivedPredicateSet = getDerivedPredicates(rules);
+    // 获取每个谓词对应的以它为头部的规则
     headPredicateRuleListMap = getHeadPredicateRuleListMap(rules);
+    // 获取修饰后的推理目标（识别出目标中的常量）
     Atom newGoal = getNewGoal(goal);
+    // 将修饰后的目标的谓词加入谓词的集合
     addPredicate((AdornPredicate) newGoal.getPredicate());
+    // 获取修饰后的规则集
     List<Rule> newRules = getNewRules();
 
     return new Program(newRules, newGoal);
@@ -132,14 +138,20 @@ public class SipTransformer implements Transformer {
   private List<Rule> getNewRules() {
     List<Rule> output = new ArrayList<>();
 
+    // 对每个新增的谓词进行迭代
     for (int i = 0; i < predicateCount; i++) {
       AdornPredicate predicate = predicateList.get(i);
-      // Get the original predicate's rules
+      // 获取原谓词对应的规则
       List<Rule> ruleList = headPredicateRuleListMap.get(predicate.getInnerPredicate());
+      // 如果该谓词不是修饰的谓词，则跳过
       if (ruleList == null) continue;
+      // 对该谓词对应的每条规则进行迭代
       for (Rule rule : ruleList) {
+        // 获取修饰后的规则头
         Atom newHead = getNewHead(rule, predicate);
+        // 获取修饰后的规则体
         List<Atom> newBody = getNewBody(rule, predicate, newHead);
+        // 构建新规则，加入到输出中
         Rule newRule = new Rule(newHead, newBody);
         output.add(newRule);
       }

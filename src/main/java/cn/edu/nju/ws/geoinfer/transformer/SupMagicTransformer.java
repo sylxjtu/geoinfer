@@ -20,12 +20,18 @@ public class SupMagicTransformer implements Transformer {
 
   @Override
   public Program transform(Program program) {
+    // 不改写求解目标，直接复制即可
     Atom newGoal = Utils.clone(program.getGoal());
+    // 获取原规则集
     inputRules = program.getRules();
 
+    // 添加Supplementary magic规则
     addSupMagicRules();
+    // 添加Magic规则
     addMagicRules();
+    // 在原有规则中添加Magic谓词
     addModifiedRules();
+    // 添加Magic种子
     addSeed(program.getGoal());
 
     return new Program(outputRules, newGoal);

@@ -18,7 +18,7 @@ public class Backend {
     String program = ctx.queryParam(PARAM_PROGRAM);
 
     SqlStorageEngine.getInstance()
-        .initialize("jdbc:mysql://localhost:3306/?characterEncoding=utf8", "root", "dhf19700101");
+        .initialize("jdbc:mysql://localhost:3306/?characterEncoding=utf8", "root", "");
     SqlStorageEngine.getInstance()
         .executeSql(
             String.format(

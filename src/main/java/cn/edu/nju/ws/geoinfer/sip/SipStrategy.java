@@ -26,17 +26,29 @@ public class SipStrategy {
       Set<String> boundVariables,
       Set<Predicate> derivedPredicateSet,
       DatabaseManager<?> dbm) {
-    // First check idb or edb
+    // 检查两个原子公式谓词的类型（导出谓词或内部谓词）
     if (derivedPredicateSet.contains(lhs.getPredicate())) {
       if (derivedPredicateSet.contains(rhs.getPredicate())) {
-        return compareBothDerived(lhs, rhs, boundVariables);
+        // 均为导出谓词（比较绑定变量个数）
+        int boundCountLeft = getBoundCount(lhs, boundVariables);
+        int boundCountRight = getBoundCount(rhs, boundVariables);
+        return Integer.compare(boundCountRight, boundCountLeft);
       } else {
+        // 左操作数为导出谓词，右操作数为内部谓词，右操作数排在前
         return 1;
       }
     } else if (derivedPredicateSet.contains(rhs.getPredicate())) {
+      // 右操作数为导出谓词，左操作数为内部谓词，左操作数排在前
       return -1;
     } else {
-      return compareBothInternal(lhs, rhs, boundVariables, dbm);
+      // 均为内置谓词（在数据库中预查询，事实数更少的排在前）
+      if (dbm == null) {
+        return 0;
+      } else {
+        return Integer.compare(
+            dbm.getTableSize(lhs.getPredicate().getTableName()),
+            dbm.getTableSize(rhs.getPredicate().getTableName()));
+      }
     }
   }
 

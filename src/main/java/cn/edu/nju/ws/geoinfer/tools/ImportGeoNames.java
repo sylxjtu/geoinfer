@@ -29,7 +29,7 @@ public class ImportGeoNames {
   public static void main(String[] args) {
     String db = args.length > 1 ? args[1] : "geonames";
     SqlStorageEngine.getInstance()
-        .initialize("jdbc:mysql://localhost:3306/?characterEncoding=utf8", "root", "dhf19700101");
+        .initialize("jdbc:mysql://localhost:3306/?characterEncoding=utf8", "root", "");
     SqlStorageEngine.getInstance()
         .executeSql(
             String.format(

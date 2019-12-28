@@ -47,33 +47,24 @@ class SemiNaiveSolverManager<T extends DatabaseTable> {
    */
   T solve(Program program, DatabaseManager<T> dbm) {
     this.dbm = dbm;
+    // 获取谓词
     collectPredicates(program);
+    // 在数据库中自动创建表
     createTables();
+    // 建立谓词图
     predicateGraph = buildPredicateGraph(program);
+    // 计算强连通分量压缩图
     SccResult sccResult = GraphUtils.stronglyConnectedComponent(predicateGraph);
     sccList = getSccList(sccResult);
+    // 计算存在递归的规则
     predicateIsRecursiveMap = buildPredicateRecursiveMap();
+    // 计算每个强连通分量下属的规则
     buildPredicateRules(program, sccResult.getBelong());
-
-    if (LogCollector.getInstance().initialized()) {
-      LogCollector.getInstance().output("SemiNaiveSolver SCCs");
-      for (List<Integer> scc : sccList) {
-        LogCollector.getInstance()
-            .output(
-                StringUtils.join(
-                    scc.stream()
-                        .map(predicates::get)
-                        .map(Predicate::getFullName)
-                        .collect(Collectors.toList()),
-                    ", "));
-      }
-      LogCollector.getInstance().output("");
-    }
-
+    // 对每个强连通分量进行半朴素求值计算
     for (List<Integer> scc : sccList) {
       generalSemiNaiveScc(scc);
     }
-
+    // 使用推理目标对结果筛选
     return applyGoal(program.getGoal());
   }
 
